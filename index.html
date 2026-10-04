@@ -2,139 +2,236 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0b0a10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Void Deck — The Cheerful Void</title>
+<title>Cheerful Void Field Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0b0a10; --ink2:#12111a; --card:#16141f; --line:rgba(255,255,255,.07);
-  --text:#e8e4f0; --dim:#8f88a8; --faint:#5c5673;
+  --ink:#0b0a10; --ink2:#12111a; --card:#17151f; --card2:#1d1a27; --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+  --text:#ece8f3; --dim:#a39cba; --faint:#6a6482;
   --violet:#8b7cf7; --ember:#ff7a45; --bone:#d8cfc0; --blood:#e3455a;
   --teal:#2dd4bf; --gold:#d9a441; --cyan:#56b8ff;
+  --serif:'Cormorant Garamond',Georgia,serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
+html{background:var(--ink)}
 body{
   background:var(--ink); color:var(--text);
   font-family:'Inter',-apple-system,system-ui,sans-serif;
-  font-size:15px; line-height:1.55; overflow-x:hidden;
-  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  font-size:15px; line-height:1.6; overflow-x:hidden; min-height:100vh;
+  padding:env(safe-area-inset-top) 0 0;
 }
 body::before{
   content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139,124,247,.10), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(86,184,255,.05), transparent 60%);
+    radial-gradient(ellipse 90% 50% at 50% -10%, color-mix(in srgb, var(--glow,#8b7cf7) 13%, transparent), transparent 62%),
+    radial-gradient(ellipse 60% 40% at 90% 110%, rgba(86,184,255,.05), transparent 60%);
+  transition:background .4s;
 }
-#app{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:20px 18px 40px;min-height:100vh}
-.serif{font-family:'Cormorant Garamond',Georgia,serif}
+button{font-family:inherit;color:inherit}
+#app{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:22px 16px calc(110px + env(safe-area-inset-bottom));min-height:100vh}
+.serif{font-family:var(--serif)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;letter-spacing:.005em}
 
 /* ---------- header ---------- */
-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
-h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:30px;letter-spacing:.01em}
-h1 em{font-style:italic;color:var(--violet)}
-.tagline{color:var(--faint);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
-.iconbtn{background:var(--ink2);border:1px solid var(--line);color:var(--dim);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:22px}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.top h1{font-size:34px;line-height:1.05;margin-top:4px}
+.top h1 em{font-style:italic;color:var(--violet)}
+.iconbtn{flex:none;background:var(--ink2);border:1px solid var(--line);color:var(--dim);border-radius:12px;width:40px;height:40px;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.streak{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--gold);background:rgba(217,164,65,.1);border:1px solid rgba(217,164,65,.25);border-radius:30px;padding:4px 11px;margin-top:10px}
 
-/* ---------- stat strip ---------- */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.stat{background:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:12px 10px;text-align:center}
-.stat b{display:block;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;line-height:1.1}
-.stat span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-.stat.due b{color:var(--violet)}
-.stat.streak b{color:var(--ember)}
-.stat.mast b{color:var(--teal)}
+/* ---------- generic panels ---------- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 18px;margin-bottom:16px;position:relative;overflow:hidden}
+.panel-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel-h h2{font-size:23px}
+.link{background:none;border:none;color:var(--dim);font-size:13px;font-weight:600;cursor:pointer;padding:4px 0}
+.muted{color:var(--dim);font-size:13.5px}
+.label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:26px 2px 12px}
+.btn{display:block;width:100%;border:none;border-radius:16px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;text-align:center}
+.btn.primary{background:var(--uc,var(--violet));color:#0b0a10}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--text)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn small{display:block;font-weight:500;font-size:12px;opacity:.75;margin-top:1px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--uc);border:1px solid color-mix(in srgb,var(--uc) 40%, transparent);border-radius:30px;padding:4px 11px}
 
-/* ---------- primary CTA ---------- */
-.cta{width:100%;border:none;border-radius:16px;padding:16px;margin-bottom:24px;cursor:pointer;
-  background:linear-gradient(135deg,#8b7cf7,#6a5ae0);color:#fff;font-size:16px;font-weight:700;
-  box-shadow:0 6px 24px rgba(139,124,247,.28)}
-.cta:disabled{opacity:.4;box-shadow:none}
-.cta small{display:block;font-weight:500;font-size:12px;opacity:.8;margin-top:2px}
+/* ---------- check-in ---------- */
+.dial{margin-bottom:16px}
+.dial-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.dial-top b{font-size:14px;font-weight:600}
+.dial-top span{font-size:12.5px;color:var(--faint)}
+.dial-val{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--dc);min-width:28px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--dc);height:28px}
+.dial-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin-top:-2px}
+.trend{display:grid;grid-template-columns:96px 1fr 30px;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.trend:first-of-type{border-top:none}
+.trend .nm{font-size:13px;font-weight:600}
+.trend .nm small{display:block;color:var(--faint);font-weight:500;font-size:11px}
+.trend .v{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--dc);text-align:right}
+.bars{display:flex;gap:3px;height:30px;align-items:flex-end}
+.bars i{flex:1;background:var(--dc);opacity:.35;border-radius:3px;min-height:3px}
+.bars i.today{opacity:1}
+.bars i.none{background:rgba(255,255,255,.07);opacity:1;height:3px}
+.insight{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line);font-size:13.5px;color:var(--dim)}
+.insight button{background:none;border:none;color:var(--text);font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:inherit;padding:0}
 
-/* ---------- deck grid ---------- */
-.sectionlabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 10px 2px}
-.decks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px}
-.deck{background:var(--ink2);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;
-  position:relative;overflow:hidden;text-align:left;color:var(--text)}
-.deck::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--dc,#8b7cf7);opacity:.85}
-.deck h3{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;line-height:1.15;margin-bottom:3px}
-.deck .meta{font-size:11px;color:var(--faint)}
-.deck .duechip{position:absolute;top:10px;right:10px;background:var(--dc);color:#0b0a10;font-size:10px;font-weight:800;
-  border-radius:20px;padding:2px 8px;min-width:20px;text-align:center}
-.deck .bar{height:3px;border-radius:3px;background:rgba(255,255,255,.07);margin-top:10px;overflow:hidden}
-.deck .bar i{display:block;height:100%;background:var(--dc);border-radius:3px}
-.deck.syn{grid-column:1 / -1}
+/* ---------- today's move ---------- */
+.move{border-color:color-mix(in srgb,var(--uc) 35%, transparent)}
+.move::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 100% 70% at 100% 0%, color-mix(in srgb,var(--uc) 16%, transparent), transparent 65%)}
+.move > *{position:relative}
+.move h3{font-size:30px;line-height:1.1;margin:14px 0 8px}
+.move .idea{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.4;color:var(--dim);margin-bottom:16px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:13px;margin-bottom:16px}
+.pill b{color:var(--uc)}
 
-/* ---------- study screen ---------- */
+.mini{background:none;border:none;padding:0;font:inherit;display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left;width:100%;color:var(--text)}
+.mini .big{font-family:var(--serif);font-size:38px;font-weight:700;line-height:1;color:var(--violet);min-width:44px}
+.mini h3{font-size:20px;line-height:1.2}
+.mini .arrow{margin-left:auto;color:var(--faint);font-size:22px}
+
+/* ---------- path ---------- */
+.overall{display:flex;gap:3px;margin:8px 0 6px}
+.overall i{flex:1;height:6px;border-radius:3px;background:color-mix(in srgb,var(--uc) 18%, transparent)}
+.overall i.on{background:var(--uc)}
+.unit{margin-top:30px}
+.unit-h{display:flex;gap:14px;align-items:flex-start;margin-bottom:6px}
+.unit-n{font-family:var(--serif);font-size:44px;font-weight:700;line-height:.9;color:var(--uc)}
+.unit-h h2{font-size:27px;line-height:1.1}
+.unit-h .sub{font-size:12.5px;color:var(--faint);letter-spacing:.04em}
+.unit-intro{font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.45;color:var(--dim);margin:8px 0 14px 2px}
+.steps{position:relative;padding-left:4px}
+.step{display:flex;align-items:center;gap:14px;width:100%;background:none;border:none;text-align:left;padding:10px 6px 10px 0;cursor:pointer;position:relative}
+.step + .step::before{content:"";position:absolute;left:13px;top:-12px;height:24px;width:2px;background:color-mix(in srgb,var(--uc) 25%, transparent)}
+.node{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid color-mix(in srgb,var(--uc) 45%, transparent);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--uc);background:var(--ink);position:relative;z-index:1}
+.step.done .node{background:var(--uc);border-color:var(--uc);color:#0b0a10}
+.step.current .node{box-shadow:0 0 0 5px color-mix(in srgb,var(--uc) 18%, transparent);border-color:var(--uc)}
+.step .t{flex:1;min-width:0}
+.step .t b{display:block;font-size:15.5px;font-weight:600;line-height:1.3}
+.step .t span{font-size:12.5px;color:var(--faint)}
+.step .go{color:var(--faint);font-size:18px}
+.step.current .t b{color:var(--uc)}
+
+/* ---------- lesson ---------- */
+.back{background:none;border:none;color:var(--dim);font-size:14px;font-weight:600;cursor:pointer;padding:6px 0;margin-bottom:14px}
+.lesson-hero{margin-bottom:24px}
+.lesson-hero .num{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:16px 0 6px}
+.lesson-hero h1{font-size:40px;line-height:1.05}
+.lesson-hero .idea{font-family:var(--serif);font-size:22px;line-height:1.38;font-weight:500;margin-top:16px;padding-left:16px;border-left:3px solid var(--uc)}
+.sec{margin-bottom:16px}
+.sec-n{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--uc);margin-bottom:12px}
+.sec-n i{font-style:normal;font-family:var(--serif);font-size:18px;letter-spacing:0}
+.life{font-size:16px;line-height:1.7}
+.practice h3{font-size:26px;line-height:1.15;margin-bottom:4px}
+.practice .min{font-size:12.5px;color:var(--faint);margin-bottom:16px}
+.practice ol{list-style:none;counter-reset:s;margin-bottom:18px}
+.practice li{counter-increment:s;position:relative;padding:0 0 14px 40px;font-size:15px;line-height:1.55}
+.practice li::before{content:counter(s);position:absolute;left:0;top:-1px;width:26px;height:26px;border-radius:50%;background:color-mix(in srgb,var(--uc) 16%, transparent);color:var(--uc);font-weight:700;font-size:12.5px;display:grid;place-items:center}
+.tried{font-size:12.5px;color:var(--faint);text-align:center;margin-top:10px}
+.prompt{font-family:var(--serif);font-size:21px;line-height:1.35;font-weight:600;margin-bottom:14px}
+textarea{width:100%;background:var(--ink);border:1px solid var(--line2);border-radius:14px;color:var(--text);padding:13px 14px;font-size:15px;font-family:inherit;line-height:1.55;min-height:120px;resize:vertical;margin-bottom:12px}
+textarea:focus,select:focus,input:focus{outline:2px solid color-mix(in srgb,var(--uc,var(--violet)) 60%, transparent);outline-offset:1px}
+details.dc{border-top:1px solid var(--line)}
+details.dc:first-of-type{border-top:none}
+details.dc summary{list-style:none;cursor:pointer;padding:13px 26px 13px 0;font-size:15px;font-weight:600;line-height:1.4;position:relative}
+details.dc summary::-webkit-details-marker{display:none}
+details.dc summary::after{content:"+";position:absolute;right:2px;top:10px;font-size:20px;color:var(--faint);font-weight:400}
+details.dc[open] summary::after{content:"–"}
+details.dc p{font-size:14.5px;line-height:1.65;color:var(--dim);padding:0 0 16px}
+.lesson-foot{margin-top:24px;display:grid;gap:10px}
+
+/* ---------- toolkit ---------- */
+.tool{background:var(--card);border:1px solid var(--line);border-radius:20px;margin-bottom:12px;overflow:hidden}
+.tool summary{list-style:none;cursor:pointer;padding:18px 44px 18px 18px;position:relative}
+.tool summary::-webkit-details-marker{display:none}
+.tool summary::after{content:"›";position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--faint);transition:transform .2s}
+.tool[open] summary::after{transform:translateY(-50%) rotate(90deg)}
+.tool .when{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--uc);font-weight:700}
+.tool h3{font-size:22px;line-height:1.2;margin-top:3px}
+.tool .body{padding:0 18px 18px}
+.tool ol{padding-left:20px;margin-bottom:12px}
+.tool li{margin-bottom:8px;font-size:15px}
+.tool li::marker{color:var(--uc);font-weight:700}
+
+/* ---------- notes ---------- */
+.note{padding:16px 0;border-top:1px solid var(--line)}
+.note:first-child{border-top:none;padding-top:0}
+.note-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.note-h .d{font-size:12px;color:var(--faint)}
+.note .q{font-family:var(--serif);font-style:italic;font-size:16.5px;color:var(--dim);margin-bottom:6px;line-height:1.4}
+.note .tx{white-space:pre-wrap;font-size:15px}
+.x{background:none;border:none;color:var(--faint);font-size:18px;cursor:pointer;padding:0 4px}
+.empty{text-align:center;padding:30px 10px;color:var(--faint);font-size:14px}
+
+/* ---------- recall ---------- */
 .study-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.backbtn{background:none;border:none;color:var(--dim);font-size:14px;font-weight:600;cursor:pointer;padding:6px 0}
 .counter{font-size:12px;color:var(--faint);letter-spacing:.08em}
-.progress{height:3px;background:rgba(255,255,255,.07);border-radius:3px;margin-bottom:22px;overflow:hidden}
-.progress i{display:block;height:100%;background:var(--pc,#8b7cf7);border-radius:3px;transition:width .3s ease}
-
+.progress{height:4px;background:rgba(255,255,255,.07);border-radius:3px;margin-bottom:22px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--uc);border-radius:3px;transition:width .3s ease}
 .cardwrap{perspective:1200px;margin-bottom:18px}
-.flashcard{position:relative;width:100%;min-height:340px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.25,1);cursor:pointer}
+.flashcard{position:relative;width:100%;min-height:360px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.25,1);cursor:pointer}
 .flashcard.flipped{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 22px;
-  display:flex;flex-direction:column;overflow-y:auto}
-.face::before{content:"";position:absolute;inset:0;border-radius:20px;pointer-events:none;
-  background:radial-gradient(ellipse 120% 60% at 50% 0%, color-mix(in srgb, var(--pc) 9%, transparent), transparent 60%)}
+  background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 22px;display:flex;flex-direction:column;overflow-y:auto}
+.face::before{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;
+  background:radial-gradient(ellipse 120% 60% at 50% 0%, color-mix(in srgb, var(--uc) 10%, transparent), transparent 60%)}
 .face.back{transform:rotateY(180deg)}
-.deckchip{align-self:flex-start;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--pc);border:1px solid color-mix(in srgb,var(--pc) 40%, transparent);border-radius:20px;padding:3px 10px;margin-bottom:16px}
-.qtext{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.3;flex:1;display:flex;align-items:center}
-.atext{font-size:15px;line-height:1.65;color:var(--text);flex:1;display:flex;align-items:center}
-.atext p{width:100%}
+.qtext{font-family:var(--serif);font-size:25px;font-weight:600;line-height:1.3;flex:1;display:flex;align-items:center;margin-top:14px}
+.atext{font-size:15.5px;line-height:1.65;flex:1;display:flex;align-items:center;margin-top:14px}
 .hint{margin-top:14px;text-align:center;font-size:11px;color:var(--faint);letter-spacing:.1em;text-transform:uppercase}
-
 .grades{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;opacity:0;pointer-events:none;transition:opacity .25s}
 .grades.show{opacity:1;pointer-events:auto}
-.grade{border:none;border-radius:14px;padding:14px 6px;font-size:14px;font-weight:700;cursor:pointer;color:#fff}
+.grade{border-radius:14px;padding:14px 6px;font-size:14px;font-weight:700;cursor:pointer}
 .grade small{display:block;font-weight:500;font-size:10px;opacity:.75;margin-top:2px}
 .g-again{background:#4a2130;border:1px solid rgba(227,69,90,.4);color:#ff8fa0}
 .g-hard{background:#3d3420;border:1px solid rgba(217,164,65,.4);color:#f0c877}
 .g-good{background:#16352f;border:1px solid rgba(45,212,191,.4);color:#6ee7d4}
-.browse-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.browse-nav button{background:var(--ink2);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:14px;font-size:14px;font-weight:600;cursor:pointer}
+.done{text-align:center;padding:60px 10px}
+.done .glyph{font-family:var(--serif);font-size:56px;color:var(--violet);line-height:1}
+.done h2{font-size:30px;margin:14px 0 8px}
+.done p{color:var(--dim);font-size:14.5px;max-width:330px;margin:0 auto 24px}
 
-.done{ text-align:center;padding:60px 10px}
-.done .glyph{font-family:'Cormorant Garamond',serif;font-size:56px;color:var(--violet);line-height:1}
-.done h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;margin:14px 0 8px}
-.done p{color:var(--dim);font-size:14px;max-width:320px;margin:0 auto 24px}
+/* ---------- tab bar ---------- */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(11,10,16,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding:8px 8px calc(8px + env(safe-area-inset-bottom))}
+.tabbar nav{max-width:600px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{background:none;border:none;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:6px 0;cursor:pointer;letter-spacing:.02em}
+.tab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{color:var(--text)}
+.tab.on svg{stroke:var(--violet)}
 
-/* ---------- modal ---------- */
+/* ---------- modal / toast ---------- */
 .modal-bg{position:fixed;inset:0;background:rgba(5,4,10,.75);backdrop-filter:blur(6px);z-index:50;display:flex;align-items:flex-end;justify-content:center}
-.modal{background:var(--ink2);border:1px solid var(--line);border-radius:22px 22px 0 0;width:100%;max-width:560px;padding:22px 20px 34px;max-height:86vh;overflow-y:auto}
-.modal h2{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:16px}
-.modal label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:14px 0 6px}
-.modal select,.modal textarea,.modal input{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px;font-size:15px;font-family:inherit}
-.modal textarea{min-height:80px;resize:vertical}
-.mrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
-.mbtn{border:none;border-radius:14px;padding:14px;font-size:14px;font-weight:700;cursor:pointer}
-.mbtn.primary{background:var(--violet);color:#fff}
-.mbtn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim)}
-.tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:6px}
-.tool{background:var(--ink2);border:1px solid var(--line);border-radius:14px;padding:13px 6px;color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;text-align:center}
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#221f30;border:1px solid var(--line);color:var(--text);padding:10px 18px;border-radius:30px;font-size:13px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.5)}
-@media (prefers-reduced-motion: reduce){ .flashcard{transition:none} .progress i{transition:none} }
+.modal{background:var(--ink2);border:1px solid var(--line);border-radius:24px 24px 0 0;width:100%;max-width:600px;padding:22px 18px calc(30px + env(safe-area-inset-bottom));max-height:88vh;overflow-y:auto}
+.modal h2{font-size:26px;margin-bottom:6px}
+.modal label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:16px 0 6px;font-weight:600}
+.modal select,.modal input{width:100%;background:var(--ink);border:1px solid var(--line2);border-radius:12px;color:var(--text);padding:12px;font-size:15px;font-family:inherit}
+.modal textarea{min-height:80px}
+.menu{display:grid;gap:10px;margin-top:16px}
+.toast{position:fixed;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#221f30;border:1px solid var(--line2);color:var(--text);padding:10px 18px;border-radius:30px;font-size:13px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.5);white-space:nowrap}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+@media (max-width:380px){ .top h1{font-size:30px} .lesson-hero h1{font-size:34px} .trend{grid-template-columns:84px 1fr 26px} }
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div class="tabbar" id="tabbar"></div>
 <input type="file" id="importFile" accept=".json" style="display:none">
 
 <script>
 /* =========================================================
-   VOID DECK — The Cheerful Void flashcard system
-   Burnout · Optimistic Nihilism · TMT · Horror · ACT ·
-   Philosophy Lineage · Synthesis
-   Spaced repetition: 5-box Leitner (0/1/3/7/21 days)
+   THE CHEERFUL VOID · FIELD GUIDE
+   A 6-unit path: Notice → Look Under It → Read the Monsters →
+   Unhook → Choose → Practice. Each lesson: the idea, where it
+   shows up in real life, a practice for today, a journal prompt,
+   and the original study cards as "go deeper" material.
+   Daily 4-dial check-in. Optional spaced-repetition recall
+   (5-box Leitner: 0/1/3/7/21 days) over cards from opened lessons.
    ========================================================= */
 
 /* ---------- safe storage (works in artifact preview AND GitHub Pages) ---------- */
@@ -144,380 +241,933 @@ const store = {
   set(k,v){ try{ localStorage.setItem(k,v); }catch(e){ mem[k]=v; } }
 };
 
-/* ---------- decks ---------- */
+/* ---------- source decks (labels for cards and custom cards) ---------- */
 const DECKS = {
-  burnout:{ name:"Burnout", color:"var(--ember)", hex:"#ff7a45", sub:"MBI · AAQ-II · TTM · PDSA" },
-  on:{ name:"Optimistic Nihilism", color:"var(--violet)", hex:"#8b7cf7", sub:"The framework · ONAS · PFUS" },
-  tmt:{ name:"Terror Management", color:"var(--bone)", hex:"#d8cfc0", sub:"Becker · Worm at the Core" },
-  horror:{ name:"Horror & Mind", color:"var(--blood)", hex:"#e3455a", sub:"Monsters as metaphors" },
-  act:{ name:"ACT & Flexibility", color:"var(--teal)", hex:"#2dd4bf", sub:"Hexaflex · defusion · values" },
-  phil:{ name:"The Lineage", color:"var(--gold)", hex:"#d9a441", sub:"Nietzsche · Camus · Becker & co." },
-  syn:{ name:"Synthesis", color:"var(--cyan)", hex:"#56b8ff", sub:"Where the threads braid — the book's connective tissue" }
+  burnout:{ name:"Burnout", hex:"#ff7a45" },
+  on:{ name:"Optimistic Nihilism", hex:"#8b7cf7" },
+  tmt:{ name:"Terror Management", hex:"#d8cfc0" },
+  horror:{ name:"Horror & Mind", hex:"#e3455a" },
+  act:{ name:"ACT & Flexibility", hex:"#2dd4bf" },
+  phil:{ name:"The Lineage", hex:"#d9a441" },
+  syn:{ name:"Synthesis", hex:"#56b8ff" }
 };
 
-/* ---------- cards ---------- */
+/* ---------- the path ---------- */
+const UNITS = [
+  {id:"notice", name:"Notice", sub:"Name what's happening", hex:"#ff7a45",
+   intro:"It's 4:40 at the nurses' station and you can't remember the last patient's name. Start here. Burnout has a shape, and you can measure it."},
+  {id:"dread", name:"Look Under It", sub:"The fear beneath everything", hex:"#d8cfc0",
+   intro:"Someone in room 6 is dying and you're thinking about lunch. That's the system working. This unit is about the dread underneath and the walls we build to keep it quiet."},
+  {id:"monsters", name:"Read the Monsters", sub:"Horror as a clinical lens", hex:"#e3455a",
+   intro:"Lights off, a movie you've seen 4 times, and your pulse climbs anyway. Horror is a safe room to practice being scared. It's also the best vocabulary I know for what goes on inside people."},
+  {id:"unhook", name:"Unhook", sub:"Psychological flexibility", hex:"#2dd4bf",
+   intro:"Your brain says you're bad at your job. It said that yesterday too. Here you learn to hold thoughts loosely and keep moving toward what you care about while they talk."},
+  {id:"choose", name:"Choose", sub:"Optimistic Nihilism", hex:"#8b7cf7",
+   intro:"Stand in a dark yard long enough and the sky gets huge. You get small. That's the good news: nothing out there assigned you a meaning, so you get to make one."},
+  {id:"practice", name:"Practice", sub:"Make it a system", hex:"#56b8ff",
+   intro:"Thursday, 2 weeks into a plan you half kept. This is where the ideas turn into a calendar. Small experiments, honest data, run it again."}
+];
+
+const LESSONS = [
+/* ---------- 1 · NOTICE ---------- */
+{id:"n1",unit:"notice",title:"Burnout has a shape",
+ idea:"Exhaustion first, then distance, then the creeping sense you're bad at this now. It finds the most devoted people first.",
+ life:"You used to stay late because you wanted to. Now you stay late and feel nothing about it, and the jokes at handoff got meaner. That's what chronic, unmanaged stress does to a normal person. It does it on a schedule.",
+ practice:{name:"The column audit",min:10,steps:["Draw 3 columns: Tank, Distance, Doubt.","Under each, write 1 moment from this week where it showed up.","Circle the loudest column. That's your starting point."]},
+ prompt:"When did you last feel like the person who chose this work? Where were you standing?",
+ cards:["bo01","bo02","bo03","bo09","bo05"]},
+{id:"n2",unit:"notice",title:"The numbing",
+ idea:"Distance is how an exhausted mind tries to stop the bleeding. It works for about a week.",
+ life:"Bed 4 becomes 'the gallbladder.' Your partner's bad day turns into background noise. You catch yourself watching people the way you'd watch the TV in a waiting room.",
+ practice:{name:"Re-humanize 1 person",min:5,steps:["Pick 1 person you've flattened into a role today. A patient, a coworker, your kid's teacher.","Find 1 specific, useless detail about them. Their dog's name. The sticker on their water bottle.","Use it, out loud or in your head, the next time you see them."]},
+ prompt:"Who have you turned into a case number lately? What did that protect you from?",
+ cards:["bo06","sy06","ho05","sy11"]},
+{id:"n3",unit:"notice",title:"Get a baseline",
+ idea:"Exhaustion warps the instrument doing the measuring, which is you. Numbers catch the drift your mood can't.",
+ life:"Ask a burned-out person how they're doing and they'll say 'fine, busy.' They believe it. The slide is slow enough to feel normal.",
+ practice:{name:"Start the daily check-in",min:2,steps:["Open Today and rate your 4 dials. First number wins.","Do it at the same time tomorrow. Tie it to something you already do, like coffee or parking the car.","After 14 days, read the trend before you decide how you feel about it."]},
+ prompt:"What would you have rated yourself 6 months ago? What changed between then and now?",
+ cards:["bo04","bo07","bo24","bo19"]},
+{id:"n4",unit:"notice",title:"Match the fix to the wound",
+ idea:"Depletion and moral injury feel identical from the inside, and depression can hide in both. Rest only fixes 1 of them.",
+ life:"You took a week off and came back worse. Maybe the problem is being asked to do something you think is wrong, 30 times a day.",
+ practice:{name:"Wound sort",min:10,steps:["List what's draining you this month. Be petty and specific.","Mark each one D (too much), M (against my values), or E (everywhere, even at home).","D gets a resource or a boundary. M gets a voice, in writing, to someone. E gets screened: talk to your PCP or a therapist this week."]},
+ prompt:"What does your job ask you to do that you'd never choose? What would it cost to say so out loud?",
+ cards:["bo08","bo11","bo10"]},
+{id:"n5",unit:"notice",title:"Where you are right now",
+ idea:"Change moves in loops. Your stage decides which kind of help lands.",
+ life:"Someone tells you to 'just set boundaries' and you want to throw your phone. You were still deciding whether there was a problem.",
+ practice:{name:"Stage check",min:5,steps:["Pick the 1 change you keep circling. Sleep, drinking, quitting, saying no.","Choose your honest stage: no problem, maybe, planning, doing, keeping it.","Take only the next stage's step. 'Maybe' means list what staying the same costs you. 'Planning' means a written plan with a date on it."]},
+ prompt:"What change have you been about to make for over a year? What does staying put pay you?",
+ cards:["bo12","bo13","bo14","bo15","bo16","sy13"]},
+
+/* ---------- 2 · LOOK UNDER IT ---------- */
+{id:"d1",unit:"dread",title:"The worm at the core",
+ idea:"You know you're going to die. A lot of what you build is there to keep that fact quiet.",
+ life:"On the anniversary of a death you clean the whole house. At 2 a.m. it's retirement accounts. Then a sudden, urgent need to finish the book. Same engine every time.",
+ practice:{name:"Spot the project",min:10,steps:["Write down what you hope outlasts you. Kids, work, a name, a building.","Next to each, write how it feels to imagine it gone.","Notice which ones you can hold loosely and which ones grip back."]},
+ prompt:"What's your immortality project? Who would you be if it failed?",
+ cards:["tm01","tm02","tm11","tm21","ph14"]},
+{id:"d2",unit:"dread",title:"How we hide",
+ idea:"When death is in the room, we argue it away. When it's just outside the room, we defend our worldview harder and never connect the 2.",
+ life:"After a code you're suddenly furious about a coworker's politics. After a funeral you buy something expensive. The reaction lands somewhere that looks unrelated.",
+ practice:{name:"After-death inventory",min:5,steps:["Next time you're near a death, a bad diagnosis, or a scary headline, set a reminder for 2 hours later.","When it goes off, ask: what am I judging harder than usual right now?","Write it down. You just caught a defense in the wild."]},
+ prompt:"Think about your last brush with mortality. What did you do in the 24 hours after?",
+ cards:["tm06","tm07","tm08","tm03","tm04"]},
+{id:"d3",unit:"dread",title:"Your buffers",
+ idea:"Feeling like you matter, and having people close, hold back the dread. Burnout eats those walls from the inside.",
+ life:"You lose the job and it feels like dying. That's a buffer failing. Whatever it was holding back comes in all at once.",
+ practice:{name:"Buffer check",min:5,steps:["Rate 0 to 10: does my life mean something right now? Do I matter to the people around me? How connected do I feel?","Find the lowest number.","Do 1 small thing for that buffer today. Text someone. Finish something. Show up to the thing."]},
+ prompt:"Which of your buffers is running on fumes? When did that start?",
+ cards:["tm09","tm10","tm13","tm16","tm12"]},
+{id:"d4",unit:"dread",title:"Dread goes public",
+ idea:"Scared people punish harder and trust outsiders less. Know the pattern, and hold the specific studies loosely.",
+ life:"Judges reminded of their own death set bond 9 times higher. A pandemic year and everybody's angrier at everybody. I'm in that sample too. So are you.",
+ practice:{name:"Hold the verdict",min:5,steps:["Notice the next harsh judgment you make about a stranger, a patient, or a group.","Ask: is death closer than usual for me today?","If yes, wait 24 hours before you act on the verdict."]},
+ prompt:"Who do you judge hardest when you're scared? What do they threaten?",
+ cards:["tm05","tm14","tm15","tm17"]},
+{id:"d5",unit:"dread",title:"Death is a coworker",
+ idea:"Healthcare runs on chronic mortality salience. Your exhaustion tracks that load as much as the hours.",
+ life:"Your neighbor works the same hours at a desk and isn't wrecked the way you are. They didn't deliver bad news to 2 families before lunch.",
+ practice:{name:"Close the loop",min:2,steps:["After a hard death or diagnosis, take 90 seconds before the next room.","Say the person's name to yourself and 1 thing you noticed about them.","Breathe out and go. A tiny funeral repairs more than you'd think."]},
+ prompt:"Whose death is still riding around with you? What would a small ritual for them look like?",
+ cards:["tm18","tm19","sy04","sy05"]},
+
+/* ---------- 3 · READ THE MONSTERS ---------- */
+{id:"h1",unit:"monsters",title:"Fear with an exit door",
+ idea:"Horror is chosen dread at a dose you control. That makes it practice.",
+ life:"You grip the armrest, the thing jumps, you laugh. Your body just ran a full threat response and came out the other side in under 4 seconds. That's a rep.",
+ practice:{name:"Prescribed scare",min:90,steps:["Pick a movie, story, or game 1 notch scarier than comfortable.","While it's on, notice your body. Jaw, breath, hands. Name each spike.","After, write 1 line: what did I sit through that I'd usually avoid?"]},
+ prompt:"What scared you as a kid that doesn't now? What changed?",
+ cards:["ho01","ho03","ho04","ho15","ho14"]},
+{id:"h2",unit:"monsters",title:"Rehearsal",
+ idea:"People who'd voluntarily simulated catastrophe were less blindsided when a real one showed up.",
+ life:"March 2020. The friend who'd watched every outbreak movie had a plan and a stocked pantry. Most of us were refreshing the news and buying a 7th bottle of hand soap.",
+ practice:{name:"Worst-case walkthrough",min:10,steps:["Pick 1 thing you're dreading this month.","Run it like a movie: the worst version, scene by scene, about a character who isn't you.","Pause at the scariest frame. What does the main character do next? Write that."]},
+ prompt:"What catastrophe do you rehearse without meaning to? Is the rehearsal helping?",
+ cards:["ho02","ho20","ho19","ho16"]},
+{id:"h3",unit:"monsters",title:"The bestiary",
+ idea:"Every monster is a clinical picture. Naming the creature gives you a handle on the thing.",
+ life:"The vampire is the relationship that charms you and empties you. The werewolf is the rage that 'wasn't me.' Body horror is a diagnosis. Possession is the thought that won't leave.",
+ practice:{name:"Name your monster",min:5,steps:["Which monster has been in your house lately?","Write 2 sentences about it in 3rd person, like a field guide entry.","Add 1 line: what does it want from me?"]},
+ prompt:"If your hardest week this year were a horror movie, what's the monster and how does it end?",
+ cards:["ho06","ho08","ho11","ho12"]},
+{id:"h4",unit:"monsters",title:"Haunted places",
+ idea:"Grief that never finished turns into a haunting. Every haunted house has a room nobody opens.",
+ life:"The holiday where nobody mentions Dad. The kitchen drawer still full of old prescriptions. The family that walks into the same argument every year like a ghost in the same hallway.",
+ practice:{name:"Open 1 door",min:15,steps:["Pick a locked room: something you or your family never talk about.","Write about it for 10 minutes without editing. Nobody reads this.","Close the notebook and do something with your hands. Dishes count."]},
+ prompt:"What room in your history stays shut? What's in it?",
+ cards:["ho07","ho13","ho17","ho09"]},
+{id:"h5",unit:"monsters",title:"Monster talk",
+ idea:"A shared metaphor lowers the defenses. The creature carries the shame so the person doesn't have to.",
+ life:"A patient can't say 'I feel dead inside.' They can say 'I've been a zombie since January.' Now you're talking. The dark joke in the break room does the same job for staff.",
+ practice:{name:"Offer a monster",min:5,steps:["In your next hard conversation, offer a creature. 'Does it feel more like a ghost or a vampire?'","Let them take it or reject it. Both answers are data.","Talk about the creature first. The person comes after."]},
+ prompt:"What dark joke got you through a bad shift? What was it really saying?",
+ cards:["ho18","sy07","sy16"]},
+
+/* ---------- 4 · UNHOOK ---------- */
+{id:"a1",unit:"unhook",title:"Bring it along",
+ idea:"The aim is to live well while you feel whatever you feel. Feeling better is a bonus.",
+ life:"You've spent years trying to get the anxiety to 0 before you do the thing. The anxiety keeps winning. Maybe it rides in the car with you.",
+ practice:{name:"5 minutes, as is",min:5,steps:["Pick 1 thing you've been putting off until you feel ready.","Rate the discomfort 0 to 10. Leave it there.","Do the first 5 minutes with the number exactly where it is."]},
+ prompt:"What have you been waiting to feel ready for? How long have you been waiting?",
+ cards:["ac01","ac02","ac15","ac14"]},
+{id:"a2",unit:"unhook",title:"Quicksand",
+ idea:"Struggling against pain is what pulls people under. Willingness means making room for it, even while you hate it.",
+ life:"The scrolling, the 3rd glass, the 'I'm fine.' Each one buys 20 minutes of relief. Add up the minutes and your life got smaller.",
+ practice:{name:"Willingness dial",min:5,steps:["When something hurts today, rate 2 numbers: how bad it is, and how willing you are to have it.","Leave the first number alone. Nudge the second up by 1.","Notice what your shoulders do when you stop pushing."]},
+ prompt:"List everything you've tried to make a feeling go away. Has any of it worked long term?",
+ cards:["ac03","ac05","ac10","ac17","ac08"]},
+{id:"a3",unit:"unhook",title:"Thoughts are thoughts",
+ idea:"'I'm a failure' becomes 'I'm having the thought that I'm a failure.' Same words. The thought loses the steering wheel.",
+ life:"You're driving home replaying 1 sentence you said in a meeting. It's loud and it sounds like the truth. It's a passenger yelling from the back of the bus.",
+ practice:{name:"Name the show",min:3,steps:["Catch 1 harsh thought today and write it down word for word.","Put 'I'm having the thought that...' in front of it.","Give it a title like a radio show. 'Oh. The Imposter Hour is on again.'"]},
+ prompt:"What thought has been riding with you the longest? How old were you when it got on?",
+ cards:["ac04","ac11","ac09"]},
+{id:"a4",unit:"unhook",title:"The observer",
+ idea:"Your story, your labels, and your moods are weather. You're the sky that's watched every version of you.",
+ life:"A diagnosis, a divorce, a bad review. Each one tries to become who you are. Some part of you watched all of it happen and is still here, watching.",
+ practice:{name:"Weather report",min:3,steps:["Sit somewhere you can see out a window.","Describe what you feel like a forecast: 'Heavy cloud over the chest, chance of irritation by 3.'","Notice who's giving the report."]},
+ prompt:"What label have you been treating as your whole self? Who were you before it?",
+ cards:["ac06","ac18","ph18","ph10"]},
+{id:"a5",unit:"unhook",title:"Directions",
+ idea:"Goals are places you arrive. Values are directions you never finish. That's why values survive a career change.",
+ life:"You got licensed and felt flat for a week. The goal was done. 'Be someone who helps' never gets done, which is why it keeps working.",
+ practice:{name:"1 values move",min:10,steps:["Write 1 value as a verb. 'To make people feel less alone.' 'To make things.'","Pick 1 action that points that way and takes under 15 minutes.","Put it on today's calendar with a time. Do it even if you feel like garbage."]},
+ prompt:"What do you want your life to be about, even if nobody ever notices?",
+ cards:["ac07","ac12","ac16","ph03","ph11"]},
+
+/* ---------- 5 · CHOOSE ---------- */
+{id:"c1",unit:"choose",title:"The universe owes you nothing",
+ idea:"No cosmic meaning means no cosmic ledger. That's a permission slip.",
+ life:"You keep waiting for it to be fair, and the grievance is its own full-time job. Drop the expectation and the same Tuesday stings less, because nothing got breached.",
+ practice:{name:"Find the invoice",min:5,steps:["Write 1 thing you resent right now.","Underneath, write what you believe you were owed.","Ask who promised it. If the answer is 'the universe,' cross it out."]},
+ prompt:"What did you think life owed you by now? Who sent the bill?",
+ cards:["on01","on02","on03","on22","ph05"]},
+{id:"c2",unit:"choose",title:"Zoom out, zoom in",
+ idea:"Zoom out to right-size the pain. Zoom back in to live. The telescope is for perspective.",
+ life:"Your worst day is invisible from orbit. Your kid's soccer game is 10 feet away. You need both distances, and you need to know which one you're standing at.",
+ practice:{name:"The 2 zooms",min:5,steps:["Take the thing eating you today. See it from the roof, the city, the planet, the galaxy.","Stop when it's small enough to breathe around.","Zoom back to your hands. What can they do in the next hour?"]},
+ prompt:"What felt enormous 5 years ago that you barely remember now?",
+ cards:["on05","on13","on12","ho10","sy12"]},
+{id:"c3",unit:"choose",title:"Meaning is made",
+ idea:"Nobody hid a purpose for you to dig up. You write it, and the temporary kind counts.",
+ life:"A meal ends and it still fed you. A song ends and it still got you. Everything you love is going to end, and you were right to love it.",
+ practice:{name:"Author 1 small meaning",min:10,steps:["Pick an ordinary thing you'll do today. A commute, a meal, the walk to the car.","Decide on purpose what it's for. 'This drive is for that album.'","Do it that way and see if it feels different."]},
+ prompt:"What temporary thing has meant the most to you? Does it matter that it ended?",
+ cards:["on07","on08","on16","ph09","on14"]},
+{id:"c4",unit:"choose",title:"Love the boulder",
+ idea:"Sisyphus knows the rock rolls back and pushes anyway. Want the whole ledger, the bad pages too.",
+ life:"Same inbox every Monday. Same charting. Same patient who never takes the meds. You can push it like a sentence or push it like it's yours.",
+ practice:{name:"The recurrence test",min:5,steps:["Imagine you have to live today again, exactly, forever.","Find the part you'd dread repeating most.","Change 1 thing about how you'll do it tomorrow so you could stand to repeat it."]},
+ prompt:"What part of your life could you say yes to forever? What part couldn't you?",
+ cards:["on17","ph01","ph02","ph06","ph07","ph08","on18"]},
+{id:"c5",unit:"choose",title:"The deadline",
+ idea:"Death is what makes your hours worth anything. Infinite time would make every choice free, and worthless.",
+ life:"The Stoics kept a skull on the desk. You've got the obituary page and knees that complain on the stairs. Same reminder.",
+ practice:{name:"Memento mori minute",min:2,steps:["Once today, say it: 'I'm going to die. Probably not today.'","Ask: given that, what's this next hour for?","Spend the hour on that."]},
+ prompt:"If you had 1 year left, what would you stop doing on Monday?",
+ cards:["on19","ph12","ph13","ph20","tm20"]},
+{id:"c6",unit:"choose",title:"Guardrails",
+ idea:"'Nothing matters' is where choosing starts. Using it to check out is the failure mode.",
+ life:"There's a version of this philosophy that turns into a reason to stop caring and doomscroll till 1 a.m. I've lived in that version. The magic mirror in your pocket is happy to help.",
+ practice:{name:"Rest or hide?",min:5,steps:["Ask honestly: am I using 'nothing matters' to rest, or to hide?","If it's hiding, pick 1 thing you still care about and give it 10 minutes today.","Put the phone in another room while you do it."]},
+ prompt:"Where has 'it doesn't matter' turned into an excuse? What would you do if it mattered a little?",
+ cards:["on04","on09","on10","on11","ph19","ph04"]},
+
+/* ---------- 6 · PRACTICE ---------- */
+{id:"p1",unit:"practice",title:"Run small experiments",
+ idea:"Plan, do, study, act. A cycle has no failures in it. Only information.",
+ life:"Your new year's plan died on January 9. A PDSA cycle would call January 9 a data point and ask what to change.",
+ practice:{name:"Start a 2-week cycle",min:15,steps:["PLAN: pick 1 behavior, specific enough to count. Write down the likely barrier.","DO: run it for 14 days. 1 line a day in Notes.","STUDY: compare your check-in trend with the 2 weeks before.","ACT: keep it, tweak it, or drop it. Then start the next cycle."]},
+ prompt:"What did you quit because it 'didn't work'? What would the data have said?",
+ cards:["bo17","bo18","sy09"]},
+{id:"p2",unit:"practice",title:"Keep the data honest",
+ idea:"In a universe with no given truths, measurement is the flashlight. It keeps your made meaning honest.",
+ life:"Feelings lie about trends. 1 bad Monday convinces you nothing has changed in a year. The chart disagrees.",
+ practice:{name:"Set the schedule",min:5,steps:["Daily: the 4-dial check-in. Weekly: 1 journal entry.","Monthly: retake the MBI or AAQ-II. Put it on your calendar now, repeating.","Quarterly: review the cycles you ran and what they taught you."]},
+ prompt:"What do you believe about yourself that you've never checked against data?",
+ cards:["on06","on21","sy10","sy15"]},
+{id:"p3",unit:"practice",title:"It's the system too",
+ idea:"Burnout grows in institutions that treat people as inputs. Your personal levers are real, and so is the cage.",
+ life:"The EHR, the throughput metrics, the meeting about the meeting. You can do every breathing exercise ever invented and the inbox will still say 212.",
+ practice:{name:"Pull 1 system lever",min:15,steps:["Write the 1 structural thing that drains you most. A workflow, a policy, a staffing gap.","Find 1 other person who hates it too.","Draft 1 concrete fix together and send it to someone who can say yes."]},
+ prompt:"Which part of your burnout belongs to the system? Which part is yours to carry?",
+ cards:["ph15","ph16","ph17","on15"]},
+{id:"p4",unit:"practice",title:"Resilience is a skill",
+ idea:"You build it rep by rep, and recovery is a garden you keep tending.",
+ life:"Day 40 of doing pretty well. You skip the check-in because you're fine. That's usually the week the slide starts.",
+ practice:{name:"Write a relapse plan",min:10,steps:["Write your early warning signs: the first 2 things that change when you start slipping.","Write what you'll do when you see them.","Give a copy to 1 person and ask them to say something when they notice."]},
+ prompt:"What are your first signs of slipping? Who notices before you do?",
+ cards:["bo20","bo21","ac13","sy08"]},
+{id:"p5",unit:"practice",title:"The whole map",
+ idea:"The void is the diagnosis. Cheerful is the intervention.",
+ life:"Burnout brought you in. The monsters explained it. The void turned out to be a studio. Now you get to keep the lights on in there.",
+ practice:{name:"Write your own protocol",min:20,steps:["Go back through Notes. Pick the 1 practice from each unit that actually worked.","Put them on 1 page. That's your protocol.","Walk the path again in 3 months and see what you'd answer differently."]},
+ prompt:"What do you know now that you didn't when you started? Say it in 1 sentence.",
+ cards:["bo22","bo23","on20","sy14","sy01","sy02","sy03"]}
+];
+
+/* ---------- toolkit: when it hits ---------- */
+const TOOLS = [
+  {when:"Sunday night", title:"The dread shows up early", lesson:"a2",
+   steps:["Name it out loud: 'That's the Sunday feeling.'","Rate your willingness to have it, 0 to 10. Nudge it up by 1.","Pick 1 small thing tomorrow that belongs to you. A lunch, a walk, a song."]},
+  {when:"In your head", title:"A thought says you're failing", lesson:"a3",
+   steps:["Say: 'I'm having the thought that I'm failing.'","Give the thought a show title.","Ask what your values would have you do in the next 10 minutes. Do that."]},
+  {when:"At work", title:"You just called someone by their diagnosis", lesson:"n2",
+   steps:["That's depletion showing. Note it and keep going.","Find 1 human detail about that person before you see them again.","Check your Energy dial tonight."]},
+  {when:"After a death", title:"You have 90 seconds before the next room", lesson:"d5",
+   steps:["Say their name to yourself.","Name 1 thing you noticed about them.","Breathe out. Walk in."]},
+  {when:"Late at night", title:"You've been scrolling for 40 minutes", lesson:"c6",
+   steps:["Ask: is this rest, or hiding?","If hiding, put the phone across the room.","Do 1 thing you'd actually choose. Even if it's sleep."]},
+  {when:"Any time", title:"Everything feels pointless", lesson:"c2",
+   steps:["Zoom out until the problem is small enough to breathe around.","Zoom back to your hands.","Pick 1 thing they can do in the next hour."]},
+  {when:"Doom spiral", title:"You want to quit everything", lesson:"n4",
+   steps:["Sort it: too much, against your values, or everywhere?","Too much gets a boundary. Values gets a voice.","Everywhere gets a call to your PCP or a therapist this week."]},
+  {when:"After a mistake", title:"You blew it", lesson:"p1",
+   steps:["Write what happened in 2 sentences, like a lab note.","What did you learn?","What changes in the next cycle? Then close the notebook."]},
+  {when:"In public", title:"You're furious at a stranger", lesson:"d4",
+   steps:["Ask: has death been close today?","If yes, hold the verdict for 24 hours.","Drink some water. Seriously."]}
+];
+
 const CARDS = [
 /* ============ BURNOUT ============ */
-{id:"bo01",deck:"burnout",q:"How does the WHO (ICD-11) define burnout?",a:"An occupational phenomenon resulting from chronic workplace stress that has not been successfully managed. Three dimensions: exhaustion, mental distance or cynicism toward the job, and reduced professional efficacy. Notably classified as occupational — not a medical condition."},
-{id:"bo02",deck:"burnout",q:"What are Maslach's three dimensions of burnout?",a:"Emotional exhaustion (depleted, nothing left to give), depersonalization (cynical distancing — treating people like objects or cases), and reduced personal accomplishment (perceived inefficacy). Burnout is a profile across all three, not a single score."},
-{id:"bo03",deck:"burnout",q:"Who coined the term burnout, and in what context?",a:"Herbert Freudenberger, 1974, observing volunteers (including himself) at a free clinic in New York. The people burning out were the most dedicated ones — which is still the pattern. Devotion is the fuel."},
-{id:"bo04",deck:"burnout",q:"What does the MBI measure and how is it structured?",a:"The Maslach Burnout Inventory: 22 items across three subscales (EE, DP, PA). It yields a profile, not a diagnosis — high EE + high DP + low PA is the classic burnout signature. It gives you data instead of impressions."},
-{id:"bo05",deck:"burnout",q:"Why is emotional exhaustion considered the core dimension?",a:"It is the strongest predictor of outcomes — turnover, health effects, errors — and usually appears first. DP is often the psyche's attempted defense against EE: numb the caring to stop the bleeding. It backfires."},
-{id:"bo06",deck:"burnout",q:"What is depersonalization actually doing, functionally?",a:"It is self-protective numbing — cynical distance deployed to conserve emotional resources. The tragedy: it protects you from patients by disconnecting you from the very meaning that made the work sustainable."},
-{id:"bo07",deck:"burnout",q:"What does the AAQ-II measure, and what is the scoring trap?",a:"Psychological inflexibility / experiential avoidance — 7 items, higher scores mean MORE inflexibility. The trap: it reads intuitively backwards, so watch the reverse-scoring direction when interpreting or presenting it."},
-{id:"bo08",deck:"burnout",q:"How is burnout distinguished from depression?",a:"Burnout is initially context-specific — tied to work, often improving with genuine distance from the stressor. Depression is pervasive across domains. They overlap heavily and can co-occur, so screen for both rather than assuming."},
-{id:"bo09",deck:"burnout",q:"What is the core reframe: burnout as personal failure vs what?",a:"Burnout is a predictable response of a normal person to chronic, unmanaged stressors — not a character defect. It is systemic in origin with individual levers available. Predictable, not personal."},
-{id:"bo10",deck:"burnout",q:"What is the JD-R model of burnout?",a:"Job Demands-Resources: burnout emerges when demands chronically exceed resources. Two parallel processes — a health-impairment path (demands drain energy) and a motivational path (resources feed engagement). Fix either side of the ledger."},
-{id:"bo11",deck:"burnout",q:"How does moral injury differ from burnout?",a:"Burnout is resource depletion; moral injury is a violation — being forced to act against your moral code (or witnessing it) within a system. Different wound, different fix: rest treats depletion; moral injury needs repair, voice, and sometimes exit."},
-{id:"bo12",deck:"burnout",q:"What model is the Stages of Change, and where did it come from?",a:"The Transtheoretical Model (Prochaska & DiClemente), born from tobacco cessation research and applied broadly to health behavior change. Core insight: change is cyclical, not linear — and stage determines which intervention actually helps."},
-{id:"bo13",deck:"burnout",q:"Precontemplation: what does it sound like, and what is the right move?",a:"'I don't have a burnout problem.' Right move: increase awareness, explore the costs of NOT changing. Wrong move: pushing action — it creates reactance. Meet people where they are, not where you want them."},
-{id:"bo14",deck:"burnout",q:"Contemplation: the state and the intervention?",a:"'I might be burned out, but I'm not sure.' Ambivalence is the feature, not the bug. Use motivational interviewing — developing discrepancy: illuminate the gap between the current state and the desired one to grow intrinsic motivation."},
-{id:"bo15",deck:"burnout",q:"Preparation and Action stages: what belongs in each?",a:"Preparation: readiness to act — build a specific, concrete plan with identified resources. Action: active engagement with coping strategies, reinforcing commitment, and layering in new skills. Vague intentions die here; concrete plans survive."},
-{id:"bo16",deck:"burnout",q:"Maintenance stage: what is the actual work?",a:"Relapse prevention. Changes are made and being sustained — the work is monitoring and iteration. Individual PDSA cycles and ongoing measurement keep the gains from quietly eroding."},
+{id:"bo01",deck:"burnout",q:"How does the WHO (ICD-11) define burnout?",a:"An occupational phenomenon resulting from chronic workplace stress that has not been successfully managed. Three dimensions: exhaustion, mental distance or cynicism toward the job, and reduced professional efficacy. Notably, ICD-11 files it under occupational phenomena, outside its list of medical conditions."},
+{id:"bo02",deck:"burnout",q:"What are Maslach's three dimensions of burnout?",a:"Emotional exhaustion (depleted, nothing left to give), depersonalization (cynical distancing, treating people like objects or cases), and reduced personal accomplishment (perceived inefficacy). Burnout is a profile across all three, read together."},
+{id:"bo03",deck:"burnout",q:"Who coined the term burnout, and in what context?",a:"Herbert Freudenberger, 1974, observing volunteers (including himself) at a free clinic in New York. The people burning out were the most dedicated ones, which is still the pattern. Devotion is the fuel."},
+{id:"bo04",deck:"burnout",q:"What does the MBI measure and how is it structured?",a:"The Maslach Burnout Inventory: 22 items across three subscales (EE, DP, PA). It yields a profile: high EE + high DP + low PA is the classic burnout signature. It gives you data where you'd otherwise have impressions."},
+{id:"bo05",deck:"burnout",q:"Why is emotional exhaustion considered the core dimension?",a:"It is the strongest predictor of outcomes (turnover, health effects, errors) and usually appears first. DP is often the psyche's attempted defense against EE: numb the caring to stop the bleeding. It backfires."},
+{id:"bo06",deck:"burnout",q:"What is depersonalization actually doing, functionally?",a:"It is self-protective numbing: cynical distance deployed to conserve emotional resources. The tragedy: it protects you from patients by disconnecting you from the very meaning that made the work sustainable."},
+{id:"bo07",deck:"burnout",q:"What does the AAQ-II measure, and what is the scoring trap?",a:"Psychological inflexibility / experiential avoidance. 7 items, higher scores mean MORE inflexibility. The trap: it reads intuitively backwards, so watch the reverse-scoring direction when interpreting or presenting it."},
+{id:"bo08",deck:"burnout",q:"How is burnout distinguished from depression?",a:"Burnout is initially context-specific, tied to work, often improving with genuine distance from the stressor. Depression is pervasive across domains. They overlap heavily and can co-occur, so screen for both."},
+{id:"bo09",deck:"burnout",q:"What is the core reframe about burnout and personal failure?",a:"Burnout is a predictable response of a normal person to chronic, unmanaged stressors. It says nothing about character. It is systemic in origin with individual levers available."},
+{id:"bo10",deck:"burnout",q:"What is the JD-R model of burnout?",a:"Job Demands-Resources: burnout emerges when demands chronically exceed resources. Two parallel processes: a health-impairment path (demands drain energy) and a motivational path (resources feed engagement). Fix either side of the ledger."},
+{id:"bo11",deck:"burnout",q:"How does moral injury differ from burnout?",a:"Burnout is resource depletion; moral injury is a violation: being forced to act against your moral code (or witnessing it) within a system. Different wound, different fix: rest treats depletion; moral injury needs repair, voice, and sometimes exit."},
+{id:"bo12",deck:"burnout",q:"What model is the Stages of Change, and where did it come from?",a:"The Transtheoretical Model (Prochaska & DiClemente), born from tobacco cessation research and applied broadly to health behavior change. Core insight: change moves in cycles, and stage determines which intervention actually helps."},
+{id:"bo13",deck:"burnout",q:"Precontemplation: what does it sound like, and what is the right move?",a:"'I don't have a burnout problem.' Right move: increase awareness, explore the costs of NOT changing. Wrong move: pushing action, which creates reactance. Meet people where they are."},
+{id:"bo14",deck:"burnout",q:"Contemplation: the state and the intervention?",a:"'I might be burned out, but I'm not sure.' Ambivalence is the feature. Use motivational interviewing to develop discrepancy: illuminate the gap between the current state and the desired one to grow intrinsic motivation."},
+{id:"bo15",deck:"burnout",q:"Preparation and Action stages: what belongs in each?",a:"Preparation: readiness to act, so build a specific, concrete plan with identified resources. Action: active engagement with coping strategies, reinforcing commitment, and layering in new skills. Vague intentions die here; concrete plans survive."},
+{id:"bo16",deck:"burnout",q:"Maintenance stage: what is the actual work?",a:"Relapse prevention. Changes are made and being sustained, and the work is monitoring and iteration. Individual PDSA cycles and ongoing measurement keep the gains from quietly eroding."},
 {id:"bo17",deck:"burnout",q:"Walk the four PDSA steps for personal burnout work.",a:"PLAN: pick one behavior, set a SMART goal, anticipate barriers in advance. DO: run it 2-4 weeks, journal daily. STUDY: review the data, re-administer MBI/AAQ-II against baseline. ACT: adopt what worked, modify the partial, abandon what didn't, design the next cycle."},
-{id:"bo18",deck:"burnout",q:"What is the core philosophical reframe of PDSA?",a:"PDSA removes the concept of failure. There is no failure in a PDSA cycle — there is only information. It dissolves binary thinking about success and turns every outcome into data for the next iteration."},
-{id:"bo19",deck:"burnout",q:"What does the maintenance measurement schedule look like?",a:"Monthly MBI or AAQ-II. Weekly journaling. Quarterly goal and PDSA review. Annual full reassessment. The principle: data drives practice — not mood, not memory. Feelings lie about trends; instruments don't."},
-{id:"bo20",deck:"burnout",q:"What is the resilience reframe?",a:"Resilience is not a personality trait you either have or don't — it is a set of learnable, cultivatable skills. Operationally: reduce vulnerability + increase adaptability, built through deliberate, consistent practice."},
-{id:"bo21",deck:"burnout",q:"Recovery from burnout is not a destination. What is it?",a:"A practice. The habits that make relapse less likely — measurement, journaling, boundaries, values check-ins — never really end. You don't cross a finish line; you keep a garden."},
-{id:"bo22",deck:"burnout",q:"Recite the six core takeaways from the burnout talk.",a:"1. Burnout is predictable, not personal. 2. Instruments give data, not impressions. 3. Coping must be whole-person. 4. Optimistic Nihilism offers the philosophical reframe. 5. Resilience is learnable. 6. SMART goals + PDSA are the most evidence-supported path forward."},
-{id:"bo23",deck:"burnout",q:"What is the closing anchor of the burnout presentation?",a:"'The universe owes you nothing.' Burnout is not inevitable, and it is not the price of doing meaningful work. Drop the entitlement to a painless career, and you can start engineering a sustainable one."},
-{id:"bo24",deck:"burnout",q:"Why do assessment instruments matter more than self-impression in burnout?",a:"Because burnout distorts the instrument doing the assessing — you. Exhaustion narrows perspective and normalizes itself. Standardized measures (MBI, AAQ-II) catch drift that introspection misses, and give you a baseline to iterate against."},
+{id:"bo18",deck:"burnout",q:"What is the core philosophical reframe of PDSA?",a:"PDSA removes the concept of failure. Every outcome in a PDSA cycle is information. It dissolves binary thinking about success and turns every outcome into data for the next iteration."},
+{id:"bo19",deck:"burnout",q:"What does the maintenance measurement schedule look like?",a:"Monthly MBI or AAQ-II. Weekly journaling. Quarterly goal and PDSA review. Annual full reassessment. The principle: data drives practice. Mood and memory lie about trends, and instruments catch the lie."},
+{id:"bo20",deck:"burnout",q:"What is the resilience reframe?",a:"Resilience is a set of learnable, cultivatable skills. Operationally: reduce vulnerability + increase adaptability, built through deliberate, consistent practice."},
+{id:"bo21",deck:"burnout",q:"What shape does recovery from burnout take?",a:"A practice. The habits that make relapse less likely (measurement, journaling, boundaries, values check-ins) keep going for good. You keep a garden."},
+{id:"bo22",deck:"burnout",q:"Recite the six core takeaways from the burnout talk.",a:"1. Burnout is predictable. 2. Instruments give you data. 3. Coping must be whole-person. 4. Optimistic Nihilism offers the philosophical reframe. 5. Resilience is learnable. 6. SMART goals + PDSA are the most evidence-supported path forward."},
+{id:"bo23",deck:"burnout",q:"What is the closing anchor of the burnout presentation?",a:"'The universe owes you nothing.' Burnout is avoidable, even in meaningful work. Drop the entitlement to a painless career, and you can start engineering a sustainable one."},
+{id:"bo24",deck:"burnout",q:"Why do assessment instruments matter more than self-impression in burnout?",a:"Because burnout distorts the instrument doing the assessing: you. Exhaustion narrows perspective and normalizes itself. Standardized measures (MBI, AAQ-II) catch drift that introspection misses, and give you a baseline to iterate against."},
 
 /* ============ OPTIMISTIC NIHILISM ============ */
-{id:"on01",deck:"on",q:"Define Optimistic Nihilism in two sentences.",a:"The universe has no inherent, cosmic meaning — and that is liberating, not devastating. Freed from imposed significance, you get to create subjective, temporary, entirely real meaning on your own terms."},
+{id:"on01",deck:"on",q:"Define Optimistic Nihilism in two sentences.",a:"The universe has no inherent, cosmic meaning, and that is liberating. Freed from imposed significance, you get to create subjective, temporary, entirely real meaning on your own terms."},
 {id:"on02",deck:"on",q:"How does ON differ from passive or pessimistic nihilism?",a:"Same premise, opposite conclusion. Passive nihilism reads 'nothing matters' as a verdict and collapses into despair or apathy. ON reads it as a permission slip: if nothing matters cosmically, you are free to decide what matters locally."},
-{id:"on03",deck:"on",q:"How is ON different from toxic positivity?",a:"Toxic positivity denies the darkness; ON starts from it. It never claims things are fine — it claims that meaninglessness, honestly faced, removes the crushing weight of cosmic stakes. Optimism earned through the void, not painted over it."},
-{id:"on04",deck:"on",q:"What is the key misapplication guardrail for ON?",a:"ON used to justify disengagement is a failure mode, not the goal. The framework calls for recalibration of engagement — caring on purpose, at sustainable intensity — not abandonment of caring. 'Nothing matters' is the beginning of choosing, not the end of trying."},
-{id:"on05",deck:"on",q:"Why can cosmic insignificance be a relief rather than a wound?",a:"Because absolute stakes are crushing. If your failures echo through eternity, every mistake is catastrophic. Zoom out far enough and shame, embarrassment, and even career disasters lose their absolute weight — the stakes get right-sized to a human scale."},
+{id:"on03",deck:"on",q:"How is ON different from toxic positivity?",a:"Toxic positivity denies the darkness; ON starts from it. ON's claim is that meaninglessness, honestly faced, removes the crushing weight of cosmic stakes. Optimism earned by walking through the void."},
+{id:"on04",deck:"on",q:"What is the key misapplication guardrail for ON?",a:"ON used to justify disengagement is a failure mode. The framework calls for recalibrated engagement: caring on purpose, at sustainable intensity. 'Nothing matters' is the beginning of choosing."},
+{id:"on05",deck:"on",q:"Why can cosmic insignificance feel like relief?",a:"Because absolute stakes are crushing. If your failures echo through eternity, every mistake is catastrophic. Zoom out far enough and shame, embarrassment, and even career disasters lose their absolute weight. The stakes get right-sized to a human scale."},
 {id:"on06",deck:"on",q:"What are the ONAS and the PFUS?",a:"Two original psychometric instruments: the Optimistic Nihilism Acceptance Scale, measuring adoption of the ON stance, and the Psychological Flexibility Under Uncertainty Scale, measuring flexible responding when certainty is unavailable. Together they are the framework's measurement layer."},
-{id:"on07",deck:"on",q:"Meaning: discovered or created? What is the ON position?",a:"Created. There is no meaning out there waiting to be excavated — meaning is authored. This is the existentialist inheritance: you are not the archaeologist of your purpose, you are its novelist."},
-{id:"on08",deck:"on",q:"Does temporary meaning count as real meaning?",a:"Yes — impermanence does not invalidate. A meal ends and still nourishes; a song ends and still moved you. Demanding permanence as the price of significance is the error ON corrects. Everything you love is temporary. It was still worth loving."},
-{id:"on09",deck:"on",q:"What is the ON critique of social constructs of meaning?",a:"Religion, consumerism, and status all promise durable significance — a cosmic ledger where you matter permanently. In practice they mostly feed individual and collective ego. They are coping architecture dressed up as truth."},
-{id:"on10",deck:"on",q:"What is the 'magic mirror' argument about social media?",a:"Technology functions as a magic mirror — intensifying narcissistic tendencies through constant self-comparison and validation-seeking. It pulls people away from authentic external engagement and into curating a digital avatar that must be fed."},
-{id:"on11",deck:"on",q:"How does ON read religion?",a:"As a terror management strategy: comfort purchased through cosmic importance and literal immortality. ON doesn't sneer at the need — the dread is real — it just declines the solution, preferring meaning that survives honesty."},
-{id:"on12",deck:"on",q:"What is the relationship between ON and ego?",a:"ON deflates cosmic self-importance — and that deflation is protective. Most narcissistic injury requires believing you were owed centrality. Accept insignificance and the ego has less surface area to wound."},
-{id:"on13",deck:"on",q:"Describe the zoom-out / zoom-in move.",a:"Zoom out to the cosmic scale to right-size suffering — your worst day is invisible from orbit. Then zoom back in to act, because the local scale is where your actual life happens. The telescope is for perspective, not for living in."},
-{id:"on14",deck:"on",q:"Where does the optimism in Optimistic Nihilism actually come from?",a:"From freedom, curiosity, and play. If nothing matters by decree, then everything is permitted to matter by choice. The void isn't a wall; it's an empty canvas with no gallery owner telling you what to paint."},
-{id:"on15",deck:"on",q:"How does ON function as a burnout intervention?",a:"It decouples worth from productivity. If the universe assigns no mandate, your job is a chosen value — not a cosmic obligation you're failing. That severs the guilt engine that keeps exhausted people over-functioning."},
-{id:"on16",deck:"on",q:"ON vs Frankl: what is the key difference and the shared ground?",a:"Frankl says meaning is found — it exists and you discover it through work, love, and attitude. ON says meaning is made. Both are anti-despair technologies that put agency at the center; they just disagree about the ontology of the meaning itself."},
-{id:"on17",deck:"on",q:"What does amor fati contribute to ON?",a:"Nietzsche's 'love of fate' — wanting nothing to be different, not merely tolerating what happened but affirming it. ON borrows this as the emotional posture toward a meaningless universe: not resignation, embrace."},
-{id:"on18",deck:"on",q:"How does ON relate to Camus' absurdism?",a:"Camus insists on holding the tension between our demand for meaning and the universe's silence — revolt without resolution. ON goes one step further: it uses that tension as fuel, converting the absurd from a standoff into raw material for created meaning."},
-{id:"on19",deck:"on",q:"How does mortality function inside ON — threat or asset?",a:"Asset. Death is the deadline that gives choices weight. Infinite time would make every decision costless and therefore meaningless. Finitude is the scarcity that makes your hours worth spending well."},
-{id:"on20",deck:"on",q:"Give the ON elevator pitch.",a:"Nothing you do will matter in a billion years — which means the pressure is off, the slate is blank, and the meaning of your life is legitimately yours to write. The void is not your enemy. It's your studio."},
-{id:"on21",deck:"on",q:"Why does ON insist on being measurable (ONAS/PFUS)?",a:"Because a framework that can't be measured can't be tested, improved, or honestly defended — it stays a vibe. Instrumenting ON is the measurement-based-care ethos applied to philosophy: claims should generate data."},
-{id:"on22",deck:"on",q:"What does 'the universe owes you nothing' do, psychologically?",a:"It removes entitlement — and resentment is entitlement's shadow. Expecting fairness from an indifferent universe manufactures chronic grievance. Drop the expectation and the same events sting less, because nothing was breached."},
+{id:"on07",deck:"on",q:"Meaning: discovered or created? What is the ON position?",a:"Created. Meaning is authored. This is the existentialist inheritance: you're the novelist of your purpose."},
+{id:"on08",deck:"on",q:"Does temporary meaning count as real meaning?",a:"Yes. Impermanence leaves it intact. A meal ends and still nourishes; a song ends and still moved you. Demanding permanence as the price of significance is the error ON corrects. Everything you love is temporary. It was still worth loving."},
+{id:"on09",deck:"on",q:"What is the ON critique of social constructs of meaning?",a:"Religion, consumerism, and status all promise durable significance: a cosmic ledger where you matter permanently. In practice they mostly feed individual and collective ego. They are coping architecture dressed up as truth."},
+{id:"on10",deck:"on",q:"What is the 'magic mirror' argument about social media?",a:"Technology functions as a magic mirror, intensifying narcissistic tendencies through constant self-comparison and validation-seeking. It pulls people away from authentic external engagement and into curating a digital avatar that must be fed."},
+{id:"on11",deck:"on",q:"How does ON read religion?",a:"As a terror management strategy: comfort purchased through cosmic importance and literal immortality. ON respects the need, because the dread is real. It just declines the solution, preferring meaning that survives honesty."},
+{id:"on12",deck:"on",q:"What is the relationship between ON and ego?",a:"ON deflates cosmic self-importance, and that deflation is protective. Most narcissistic injury requires believing you were owed centrality. Accept insignificance and the ego has less surface area to wound."},
+{id:"on13",deck:"on",q:"Describe the zoom-out / zoom-in move.",a:"Zoom out to the cosmic scale to right-size suffering: your worst day is invisible from orbit. Then zoom back in to act, because the local scale is where your actual life happens. The telescope is for perspective. You live at ground level."},
+{id:"on14",deck:"on",q:"Where does the optimism in Optimistic Nihilism actually come from?",a:"From freedom, curiosity, and play. If nothing matters by decree, then everything is permitted to matter by choice. The void is an empty canvas with no gallery owner telling you what to paint."},
+{id:"on15",deck:"on",q:"How does ON function as a burnout intervention?",a:"It decouples worth from productivity. If the universe assigns no mandate, your job is a chosen value you can set down, rewrite, or keep. That severs the guilt engine that keeps exhausted people over-functioning."},
+{id:"on16",deck:"on",q:"ON vs Frankl: what is the key difference and the shared ground?",a:"Frankl says meaning is found: it exists and you discover it through work, love, and attitude. ON says meaning is made. Both are anti-despair technologies that put agency at the center; they just disagree about the ontology of the meaning itself."},
+{id:"on17",deck:"on",q:"What does amor fati contribute to ON?",a:"Nietzsche's 'love of fate': wanting nothing to be different, affirming what happened. ON borrows this as the emotional posture toward a meaningless universe: embrace."},
+{id:"on18",deck:"on",q:"How does ON relate to Camus' absurdism?",a:"Camus insists on holding the tension between our demand for meaning and the universe's silence. Revolt without resolution. ON goes one step further: it uses that tension as fuel, converting the absurd from a standoff into raw material for created meaning."},
+{id:"on19",deck:"on",q:"How does mortality function inside ON: threat or asset?",a:"Asset. Death is the deadline that gives choices weight. Infinite time would make every decision costless and therefore meaningless. Finitude is the scarcity that makes your hours worth spending well."},
+{id:"on20",deck:"on",q:"Give the ON elevator pitch.",a:"Nothing you do will matter in a billion years, which means the pressure is off, the slate is blank, and the meaning of your life is legitimately yours to write. The void is your studio."},
+{id:"on21",deck:"on",q:"Why does ON insist on being measurable (ONAS/PFUS)?",a:"Because a framework that can't be measured can't be tested, improved, or honestly defended. It stays a vibe. Instrumenting ON is the measurement-based-care ethos applied to philosophy: claims should generate data."},
+{id:"on22",deck:"on",q:"What does 'the universe owes you nothing' do, psychologically?",a:"It removes entitlement, and resentment is entitlement's shadow. Expecting fairness from an indifferent universe manufactures chronic grievance. Drop the expectation and the same events sting less, because nothing was breached."},
 
 /* ============ TERROR MANAGEMENT THEORY ============ */
 {id:"tm01",deck:"tmt",q:"What is the core claim of Terror Management Theory?",a:"Humans uniquely know they will die, and much of behavior and culture exists to manage the terror of that knowledge. Two buffers do the work: cultural worldviews (shared meaning systems) and self-esteem (feeling valuable within one)."},
-{id:"tm02",deck:"tmt",q:"What is Ernest Becker's central thesis in The Denial of Death?",a:"Civilization itself is an elaborate, shared immortality project — a symbolic defense against mortality. Human heroism is fundamentally death denial: we seek to be significant so that something of us outlasts the body."},
-{id:"tm03",deck:"tmt",q:"State the mortality salience hypothesis.",a:"If cultural worldviews buffer death anxiety, then reminding people of death (mortality salience) should intensify worldview defense — more praise for those who uphold cultural values, harsher judgment of those who violate them."},
+{id:"tm02",deck:"tmt",q:"What is Ernest Becker's central thesis in The Denial of Death?",a:"Civilization itself is an elaborate, shared immortality project: a symbolic defense against mortality. Human heroism is fundamentally death denial: we seek to be significant so that something of us outlasts the body."},
+{id:"tm03",deck:"tmt",q:"State the mortality salience hypothesis.",a:"If cultural worldviews buffer death anxiety, then reminding people of death (mortality salience) should intensify worldview defense: more praise for those who uphold cultural values, harsher judgment of those who violate them."},
 {id:"tm04",deck:"tmt",q:"State the anxiety-buffer hypothesis.",a:"If a structure buffers death anxiety, then strengthening it should reduce anxiety in response to threat. Empirically: boosting self-esteem before a death reminder or threat lowers reported anxiety and physiological arousal."},
-{id:"tm05",deck:"tmt",q:"Describe the famous municipal judges study.",a:"Judges reminded of their own death set bond for an alleged prostitute roughly nine times higher (~$455 vs ~$50) than controls. Mortality salience amplified punishment of a moral-worldview violator — culture defended at the bench."},
+{id:"tm05",deck:"tmt",q:"Describe the famous municipal judges study.",a:"Judges reminded of their own death set bond for an alleged prostitute roughly nine times higher (~$455 vs ~$50) than controls. Mortality salience amplified punishment of a moral-worldview violator. Culture defended at the bench."},
 {id:"tm06",deck:"tmt",q:"What are proximal defenses in TMT?",a:"The conscious, immediate responses when death thoughts are in awareness: suppression, distraction, denial of vulnerability ('that's decades away,' 'I exercise'). Rational-ish maneuvers to push the thought out of focus."},
-{id:"tm07",deck:"tmt",q:"What are distal defenses in TMT?",a:"The symbolic defenses that activate when death thoughts are outside awareness but still accessible: clinging to worldview, pursuing self-esteem, legacy-building. The strange finding — the deepest defenses fire when you're not consciously thinking about death at all."},
-{id:"tm08",deck:"tmt",q:"What is death-thought accessibility and how is it measured?",a:"How close death cognitions sit to the surface of the mind. Classic measure: word-fragment completion — does COFF _ _ become COFFEE or COFFIN? Elevated DTA signals the terror management system is engaged."},
-{id:"tm09",deck:"tmt",q:"How does self-esteem function in TMT?",a:"As an anxiety buffer: the feeling that one is a valuable participant in a meaningful universe. Self-esteem is culturally contingent — it's earned by meeting the standards of your worldview — which is why threats to either destabilize both."},
-{id:"tm10",deck:"tmt",q:"Literal vs symbolic immortality — distinguish them.",a:"Literal: actual continuation — afterlife, reincarnation, soul. Symbolic: outlasting death through what persists — children, works, institutions, the nation, a name on a building. Most secular striving is symbolic immortality with the label peeled off."},
-{id:"tm11",deck:"tmt",q:"Where does 'the worm at the core' phrase come from?",a:"William James — his phrase for how mortality sits at the center of human concern. Solomon, Greenberg, and Pyszczynski borrowed it for their book presenting three decades of TMT evidence that death shapes life from below awareness."},
-{id:"tm12",deck:"tmt",q:"What happens, per Becker, when an immortality project collapses?",a:"Depression and anxiety. If your heroism system — career, faith, family role — is how you outrun death, its failure isn't just loss; it's exposure. The terror the project was containing floods back in. Becker read much mental illness as failed heroism."},
-{id:"tm13",deck:"tmt",q:"How do close relationships function in TMT?",a:"As a third anxiety buffer alongside worldview and self-esteem. Attachment provides felt security against existential threat — which is partly why loss and loneliness carry existential dread far beyond the practical loss."},
-{id:"tm14",deck:"tmt",q:"What does TMT predict about prejudice, and why?",a:"Mortality salience increases derogation of outgroups and worldview-violators. Alternative worldviews are threatening because their mere existence implies yours might be wrong — and your worldview is what stands between you and the terror."},
+{id:"tm07",deck:"tmt",q:"What are distal defenses in TMT?",a:"The symbolic defenses that activate when death thoughts are outside awareness but still accessible: clinging to worldview, pursuing self-esteem, legacy-building. The strange finding: the deepest defenses fire when you're not consciously thinking about death at all."},
+{id:"tm08",deck:"tmt",q:"What is death-thought accessibility and how is it measured?",a:"How close death cognitions sit to the surface of the mind. Classic measure: word-fragment completion. Does COFF _ _ become COFFEE or COFFIN? Elevated DTA signals the terror management system is engaged."},
+{id:"tm09",deck:"tmt",q:"How does self-esteem function in TMT?",a:"As an anxiety buffer: the feeling that one is a valuable participant in a meaningful universe. Self-esteem is culturally contingent. It's earned by meeting the standards of your worldview, which is why threats to either destabilize both."},
+{id:"tm10",deck:"tmt",q:"Literal vs symbolic immortality: distinguish them.",a:"Literal: actual continuation: afterlife, reincarnation, soul. Symbolic: outlasting death through what persists: children, works, institutions, the nation, a name on a building. Most secular striving is symbolic immortality with the label peeled off."},
+{id:"tm11",deck:"tmt",q:"Where does 'the worm at the core' phrase come from?",a:"William James. It's his phrase for how mortality sits at the center of human concern. Solomon, Greenberg, and Pyszczynski borrowed it for their book presenting three decades of TMT evidence that death shapes life from below awareness."},
+{id:"tm12",deck:"tmt",q:"What happens, per Becker, when an immortality project collapses?",a:"Depression and anxiety. If your heroism system (career, faith, family role) is how you outrun death, its failure is loss plus exposure. The terror the project was containing floods back in. Becker read much mental illness as failed heroism."},
+{id:"tm13",deck:"tmt",q:"How do close relationships function in TMT?",a:"As a third anxiety buffer alongside worldview and self-esteem. Attachment provides felt security against existential threat, which is partly why loss and loneliness carry existential dread far beyond the practical loss."},
+{id:"tm14",deck:"tmt",q:"What does TMT predict about prejudice, and why?",a:"Mortality salience increases derogation of outgroups and worldview-violators. Alternative worldviews are threatening because their mere existence implies yours might be wrong, and your worldview is what stands between you and the terror."},
 {id:"tm15",deck:"tmt",q:"What does the terror management health model show?",a:"Death reminders can push health behavior in either direction depending on what carries self-esteem. If tan skin equals attractiveness equals worth, mortality salience can increase tanning intentions. The buffer beats the body when they conflict."},
-{id:"tm16",deck:"tmt",q:"Why are celebrities and heroes worshipped, through a TMT lens?",a:"Proximity to symbolic immortality. Heroes embody the worldview's ideals at maximum voltage — attaching to them lets ordinary mortals borrow significance. Fame is the culture's most visible immortality currency."},
-{id:"tm17",deck:"tmt",q:"What should an honest TMT student know about replication?",a:"Some mortality salience effects have struggled in large multi-lab replications, and effect sizes are debated. The framework remains generative, but hold specific findings with calibrated confidence — measurement-based care applies to theories too."},
-{id:"tm18",deck:"tmt",q:"How does TMT illuminate healthcare burnout specifically?",a:"Healthcare is chronic occupational mortality salience — death is a coworker. Clinicians run terror management constantly, depleting the buffers (meaning, esteem, connection) that ordinary jobs rarely tax. Exhaustion follows the existential load, not just the hours."},
-{id:"tm19",deck:"tmt",q:"What do funerals and rituals do, in TMT terms?",a:"They repair the breach. A death makes mortality maximally salient for the whole group; ritual reasserts the worldview — continuity, meaning, proper order — and re-buffers the survivors. Grief practices are collective terror management."},
-{id:"tm20",deck:"tmt",q:"TMT describes defense. What is the alternative route ON and ACT propose?",a:"Acceptance instead of buffering. TMT documents how we hide from death behind culture and esteem; ON and ACT propose walking toward it — defusing from the terror, accepting finitude, and using it to clarify values. Befriend the worm instead of burying it deeper."},
-{id:"tm21",deck:"tmt",q:"Who are the three founding researchers of TMT?",a:"Sheldon Solomon, Jeff Greenberg, and Tom Pyszczynski — social psychologists who operationalized Becker's ideas into testable hypotheses in the mid-1980s, launching hundreds of experiments on how death awareness shapes behavior."},
+{id:"tm16",deck:"tmt",q:"Why are celebrities and heroes worshipped, through a TMT lens?",a:"Proximity to symbolic immortality. Heroes embody the worldview's ideals at maximum voltage. Attaching to them lets ordinary mortals borrow significance. Fame is the culture's most visible immortality currency."},
+{id:"tm17",deck:"tmt",q:"What should an honest TMT student know about replication?",a:"Some mortality salience effects have struggled in large multi-lab replications, and effect sizes are debated. The framework remains generative, but hold specific findings with calibrated confidence. Measurement-based care applies to theories too."},
+{id:"tm18",deck:"tmt",q:"How does TMT illuminate healthcare burnout specifically?",a:"Healthcare is chronic occupational mortality salience: death is a coworker. Clinicians run terror management constantly, depleting the buffers (meaning, esteem, connection) that ordinary jobs rarely tax. Exhaustion follows the existential load as much as the hours."},
+{id:"tm19",deck:"tmt",q:"What do funerals and rituals do, in TMT terms?",a:"They repair the breach. A death makes mortality maximally salient for the whole group; ritual reasserts the worldview (continuity, meaning, proper order) and re-buffers the survivors. Grief practices are collective terror management."},
+{id:"tm20",deck:"tmt",q:"TMT describes defense. What is the alternative route ON and ACT propose?",a:"Acceptance. TMT documents how we hide from death behind culture and esteem; ON and ACT propose walking toward it: defusing from the terror, accepting finitude, and using it to clarify values. Befriend the worm."},
+{id:"tm21",deck:"tmt",q:"Who are the three founding researchers of TMT?",a:"Sheldon Solomon, Jeff Greenberg, and Tom Pyszczynski, social psychologists who operationalized Becker's ideas into testable hypotheses in the mid-1980s, launching hundreds of experiments on how death awareness shapes behavior."},
 
 /* ============ HORROR & MIND ============ */
-{id:"ho01",deck:"horror",q:"What is the core argument for horror being good for mental health?",a:"Horror delivers a controlled dose of dread — fear with an exit door. You choose the exposure, regulate through it, and leave. It's rehearsal for real terror under conditions of total safety, which builds tolerance instead of avoidance."},
+{id:"ho01",deck:"horror",q:"What is the core argument for horror being good for mental health?",a:"Horror delivers a controlled dose of dread: fear with an exit door. You choose the exposure, regulate through it, and leave. It's rehearsal for real terror under conditions of total safety, which builds tolerance."},
 {id:"ho02",deck:"horror",q:"What did Scrivner's morbid curiosity research find during COVID?",a:"Horror fans and the morbidly curious showed greater psychological resilience and preparedness during the pandemic (2021). People who had voluntarily simulated catastrophe were less blindsided when a real one arrived."},
-{id:"ho03",deck:"horror",q:"What is 'recreational fear'?",a:"The deliberate pursuit of frightening experiences for enjoyment and benefit — Clasen and Andersen's term. The key is the sweet spot: enough arousal to engage the threat system, enough safety to keep it play. Fear as a gym, not an ambush."},
-{id:"ho04",deck:"horror",q:"How does horror function as an exposure analog?",a:"Voluntary approach toward feared material — the opposite of experiential avoidance. Repeated, chosen contact with dread-laden content builds distress tolerance the way graded exposure does, minus the therapist's co-pay."},
-{id:"ho05",deck:"horror",q:"The zombie: what is its clinical metaphor?",a:"Depersonalization and burnout. Going through the motions, consuming without self, animate but not alive. The zombie is what chronic emotional exhaustion looks like from the outside — which is why burned-out clinicians recognize it instantly."},
-{id:"ho06",deck:"horror",q:"The vampire: what does it map to?",a:"Addiction and parasitic relationships — seductive depletion. The vampire is charming, promises transcendence, and empties you by invitation. You have to let it in. Every clinician has met one; some have dated one."},
-{id:"ho07",deck:"horror",q:"The ghost: what is the psychological reading?",a:"Unresolved grief and trauma — the past refusing burial. Hauntings are unfinished business made architectural. Ghost stories are grief stories where the mourning never completed, and the house remembers what the family won't discuss."},
-{id:"ho08",deck:"horror",q:"The werewolf: what does it externalize?",a:"Loss of control — rage, impulse, the split self. The transformation is cyclical, predictable, and dreaded by the person it happens to. It's the monster of 'that wasn't me' — relapse, explosive anger, the self you're afraid you contain."},
-{id:"ho09",deck:"horror",q:"The slasher and the final girl: what is the clinical frame?",a:"Hypervigilance, survival, and trauma response. The final girl notices what others dismiss, is disbelieved, adapts, and survives — a trauma-response arc played at genre speed. Slashers are also crude morality engines: consequence made ambulatory."},
-{id:"ho10",deck:"horror",q:"Cosmic horror: what is its relationship to TMT and ON?",a:"Lovecraft's dread is raw TMT: insignificance before an indifferent cosmos, sanity cracking on contact. ON stares at the identical fact — we don't matter cosmically — and reads freedom where cosmic horror reads doom. Same telescope, different caption."},
-{id:"ho11",deck:"horror",q:"Body horror: what anxiety does it dramatize?",a:"Betrayal by one's own body — illness, aging, mutation, loss of bodily control. It's the genre of the diagnosis: the horror that the threat is not outside the house but inside the skin. Cronenberg as existential health anxiety."},
-{id:"ho12",deck:"horror",q:"Possession films: what do they encode psychologically?",a:"Ego-dystonic experience — intrusive thoughts, behavior that feels 'not me,' and the stigma around both. The possessed person is the patient nobody believes, and the exorcism is the fantasy of a cure that removes the illness while sparing the self."},
-{id:"ho13",deck:"horror",q:"The haunted house: what is the structural metaphor?",a:"The psyche as architecture. Every haunted house has a room nobody opens — the repressed content of the family system. Horror knows what therapy knows: what's locked in the basement doesn't stay in the basement."},
-{id:"ho14",deck:"horror",q:"What is threat simulation theory's account of scary fiction?",a:"The brain evolved to rehearse danger safely — nightmares, play, and fiction are simulation engines. Horror is the deliberate, high-fidelity version: run the catastrophe, feel the responses, log the data, close the app. Practice dying without the dying."},
-{id:"ho15",deck:"horror",q:"Why does a jump scare feel good seconds later?",a:"Startle spikes sympathetic arousal; the appraisal 'I'm safe' triggers rebound — and excitation transfer converts leftover arousal into exhilaration. Fear plus safety equals fun. It's the roller-coaster equation running on celluloid."},
-{id:"ho16",deck:"horror",q:"How does horror work as an empathy machine?",a:"It forces sustained perspective-taking with people in extremity — you sit inside someone's worst hours, safely. That's affective rehearsal for tolerating others' suffering, which is half the clinical job description."},
-{id:"ho17",deck:"horror",q:"Silent Hill as a clinical text: what is the mechanic?",a:"The town externalizes the protagonist's psyche — guilt, grief, and repression rendered as level design. It's a projective test you walk through. The monsters aren't attacking you; they're disclosing you."},
-{id:"ho18",deck:"horror",q:"Why use horror metaphors in actual therapy?",a:"Shared metaphor lowers defenses. A patient who can't yet say 'I feel dead inside' can say 'I feel like a zombie' — the monster carries the shame so the person doesn't have to. You discuss the creature first, the self second."},
-{id:"ho19",deck:"horror",q:"Frame horror in one sentence using TMT.",a:"Horror is a mortality-salience playground with an exit door — a place to rehearse the terror TMT says we spend our lives avoiding, at a dose we choose, with popcorn."},
-{id:"ho20",deck:"horror",q:"Are horror fans psychologically disordered? What does the evidence say?",a:"No. Enjoyment tracks sensation seeking, morbid curiosity, and coping style — and predicts adaptive traits like resilience rather than pathology. The fans aren't broken; they're voluntarily training on the material everyone else avoids."},
+{id:"ho03",deck:"horror",q:"What is 'recreational fear'?",a:"The deliberate pursuit of frightening experiences for enjoyment and benefit (Clasen and Andersen's term). The key is the sweet spot: enough arousal to engage the threat system, enough safety to keep it play. Fear as a gym."},
+{id:"ho04",deck:"horror",q:"How does horror function as an exposure analog?",a:"Voluntary approach toward feared material, the opposite of experiential avoidance. Repeated, chosen contact with dread-laden content builds distress tolerance the way graded exposure does, minus the therapist's co-pay."},
+{id:"ho05",deck:"horror",q:"The zombie: what is its clinical metaphor?",a:"Depersonalization and burnout. Going through the motions, consuming without self, animate and lifeless. The zombie is what chronic emotional exhaustion looks like from the outside, which is why burned-out clinicians recognize it instantly."},
+{id:"ho06",deck:"horror",q:"The vampire: what does it map to?",a:"Addiction and parasitic relationships: seductive depletion. The vampire is charming, promises transcendence, and empties you by invitation. You have to let it in. Every clinician has met one; some have dated one."},
+{id:"ho07",deck:"horror",q:"The ghost: what is the psychological reading?",a:"Unresolved grief and trauma: the past refusing burial. Hauntings are unfinished business made architectural. Ghost stories are grief stories where the mourning never completed, and the house remembers what the family won't discuss."},
+{id:"ho08",deck:"horror",q:"The werewolf: what does it externalize?",a:"Loss of control: rage, impulse, the split self. The transformation is cyclical, predictable, and dreaded by the person it happens to. It's the monster of 'that wasn't me': relapse, explosive anger, the self you're afraid you contain."},
+{id:"ho09",deck:"horror",q:"The slasher and the final girl: what is the clinical frame?",a:"Hypervigilance, survival, and trauma response. The final girl notices what others dismiss, is disbelieved, adapts, and survives, a trauma-response arc played at genre speed. Slashers are also crude morality engines: consequence made ambulatory."},
+{id:"ho10",deck:"horror",q:"Cosmic horror: what is its relationship to TMT and ON?",a:"Lovecraft's dread is raw TMT: insignificance before an indifferent cosmos, sanity cracking on contact. ON stares at the identical fact (we don't matter cosmically) and reads freedom where cosmic horror reads doom. Same telescope, different caption."},
+{id:"ho11",deck:"horror",q:"Body horror: what anxiety does it dramatize?",a:"Betrayal by one's own body: illness, aging, mutation, loss of bodily control. It's the genre of the diagnosis: the horror that the threat is inside the skin. Cronenberg as existential health anxiety."},
+{id:"ho12",deck:"horror",q:"Possession films: what do they encode psychologically?",a:"Ego-dystonic experience: intrusive thoughts, behavior that feels 'not me,' and the stigma around both. The possessed person is the patient nobody believes, and the exorcism is the fantasy of a cure that removes the illness while sparing the self."},
+{id:"ho13",deck:"horror",q:"The haunted house: what is the structural metaphor?",a:"The psyche as architecture. Every haunted house has a room nobody opens: the repressed content of the family system. Horror knows what therapy knows: what's locked in the basement doesn't stay in the basement."},
+{id:"ho14",deck:"horror",q:"What is threat simulation theory's account of scary fiction?",a:"The brain evolved to rehearse danger safely. Nightmares, play, and fiction are simulation engines. Horror is the deliberate, high-fidelity version: run the catastrophe, feel the responses, log the data, close the app. Practice dying without the dying."},
+{id:"ho15",deck:"horror",q:"Why does a jump scare feel good seconds later?",a:"Startle spikes sympathetic arousal; the appraisal 'I'm safe' triggers rebound, and excitation transfer converts leftover arousal into exhilaration. Fear plus safety equals fun. It's the roller-coaster equation running on celluloid."},
+{id:"ho16",deck:"horror",q:"How does horror work as an empathy machine?",a:"It forces sustained perspective-taking with people in extremity. You sit inside someone's worst hours, safely. That's affective rehearsal for tolerating others' suffering, which is half the clinical job description."},
+{id:"ho17",deck:"horror",q:"Silent Hill as a clinical text: what is the mechanic?",a:"The town externalizes the protagonist's psyche: guilt, grief, and repression rendered as level design. It's a projective test you walk through. The monsters are disclosing you."},
+{id:"ho18",deck:"horror",q:"Why use horror metaphors in actual therapy?",a:"Shared metaphor lowers defenses. A patient who can't yet say 'I feel dead inside' can say 'I feel like a zombie.' The monster carries the shame so the person doesn't have to. You discuss the creature first, the self second."},
+{id:"ho19",deck:"horror",q:"Frame horror in one sentence using TMT.",a:"Horror is a mortality-salience playground with an exit door, a place to rehearse the terror TMT says we spend our lives avoiding, at a dose we choose, with popcorn."},
+{id:"ho20",deck:"horror",q:"Are horror fans psychologically disordered? What does the evidence say?",a:"No. Enjoyment tracks sensation seeking, morbid curiosity, and coping style, and predicts adaptive traits like resilience. The fans are voluntarily training on the material everyone else avoids."},
 
 /* ============ ACT & FLEXIBILITY ============ */
-{id:"ac01",deck:"act",q:"What is the core goal of ACT, in one sentence?",a:"Psychological flexibility: contacting the present moment fully, and persisting or changing behavior in service of chosen values — even in the presence of painful thoughts and feelings. Not feeling better; living better while feeling."},
-{id:"ac02",deck:"act",q:"Name the six hexaflex processes.",a:"Acceptance, cognitive defusion, present-moment contact, self-as-context, values, committed action. Their inverse — the inflexibility hexagon — is where suffering compounds: avoidance, fusion, past/future dwelling, attachment to self-story, unclear values, inaction."},
-{id:"ac03",deck:"act",q:"Define experiential avoidance and its cost structure.",a:"Attempts to escape or control unwanted inner experience — thoughts, feelings, sensations. Short-term relief, long-term cost: the avoided content grows, life narrows, and the avoidance itself becomes the disorder. It's the AAQ-II's target."},
-{id:"ac04",deck:"act",q:"What is cognitive defusion, and give the classic move.",a:"Seeing thoughts as thoughts — mental events, not truths or commands. Classic move: 'I'm a failure' becomes 'I'm having the thought that I'm a failure.' Same content, different relationship. The thought loses its steering wheel."},
-{id:"ac05",deck:"act",q:"What does acceptance mean in ACT — and what does it NOT mean?",a:"Willingness: making room for painful inner experience without struggle. It does NOT mean approval, resignation, or liking it. You accept the weather to stop fighting the sky, not because you enjoy rain."},
-{id:"ac06",deck:"act",q:"Self-as-context: distinguish the two selves.",a:"The conceptualized self is your story — labels, history, diagnoses. Self-as-context is the observer: the perspective that has watched every version of you without being any of them. The sky, not the weather. Sturdy ground when the story turns hostile."},
-{id:"ac07",deck:"act",q:"Values vs goals: what is the distinction?",a:"Goals are destinations you can complete; values are directions you never finish. You can arrive at 'get licensed'; you never arrive at 'be a healer.' Values survive achievement, failure, and career change — which makes them burnout-proof scaffolding."},
-{id:"ac08",deck:"act",q:"What is creative hopelessness?",a:"The therapeutic move of exhausting the control agenda: reviewing everything the person has tried to eliminate their pain and asking whether it has worked, long-term, to make life richer. The hopelessness is aimed at the strategy, not the person — clearing ground for something new."},
-{id:"ac09",deck:"act",q:"What is the workability question?",a:"'Has that worked, in the long run, to move you toward the life you want?' Not is the thought true, not is the feeling justified — is the response working. Workability replaces truth-fights with function analysis. Pragmatism as therapy."},
-{id:"ac10",deck:"act",q:"The quicksand metaphor: what does it teach?",a:"In quicksand, struggle sinks you — survival requires the counterintuitive move of spreading out and making full contact. Same with pain: the frantic fight against inner experience is what drowns people. Contact, not combat."},
+{id:"ac01",deck:"act",q:"What is the core goal of ACT, in one sentence?",a:"Psychological flexibility: contacting the present moment fully, and persisting or changing behavior in service of chosen values, even in the presence of painful thoughts and feelings. Living better while feeling."},
+{id:"ac02",deck:"act",q:"Name the six hexaflex processes.",a:"Acceptance, cognitive defusion, present-moment contact, self-as-context, values, committed action. Their inverse, the inflexibility hexagon, is where suffering compounds: avoidance, fusion, past/future dwelling, attachment to self-story, unclear values, inaction."},
+{id:"ac03",deck:"act",q:"Define experiential avoidance and its cost structure.",a:"Attempts to escape or control unwanted inner experience: thoughts, feelings, sensations. Short-term relief, long-term cost: the avoided content grows, life narrows, and the avoidance itself becomes the disorder. It's the AAQ-II's target."},
+{id:"ac04",deck:"act",q:"What is cognitive defusion, and give the classic move.",a:"Seeing thoughts as thoughts: mental events you can watch without obeying. Classic move: 'I'm a failure' becomes 'I'm having the thought that I'm a failure.' Same content, different relationship. The thought loses its steering wheel."},
+{id:"ac05",deck:"act",q:"What does acceptance mean in ACT, and what does it leave out?",a:"Willingness: making room for painful inner experience without struggle. Approval, resignation, and liking it are separate things. You accept the weather to stop fighting the sky. Enjoying the rain is optional."},
+{id:"ac06",deck:"act",q:"Self-as-context: distinguish the two selves.",a:"The conceptualized self is your story: labels, history, diagnoses. Self-as-context is the observer: the perspective that has watched every version of you without being any of them. You're the sky. The story is weather. Sturdy ground when the story turns hostile."},
+{id:"ac07",deck:"act",q:"Values vs goals: what is the distinction?",a:"Goals are destinations you can complete; values are directions you never finish. You can arrive at 'get licensed'; you never arrive at 'be a healer.' Values survive achievement, failure, and career change, which makes them burnout-proof scaffolding."},
+{id:"ac08",deck:"act",q:"What is creative hopelessness?",a:"The therapeutic move of exhausting the control agenda: reviewing everything the person has tried to eliminate their pain and asking whether it has worked, long-term, to make life richer. The hopelessness is aimed at the strategy, clearing ground for something new."},
+{id:"ac09",deck:"act",q:"What is the workability question?",a:"'Has that worked, in the long run, to move you toward the life you want?' The only question is whether the response is working. Workability replaces truth-fights with function analysis. Pragmatism as therapy."},
+{id:"ac10",deck:"act",q:"The quicksand metaphor: what does it teach?",a:"In quicksand, struggle sinks you. Survival requires the counterintuitive move of spreading out and making full contact. Same with pain: the frantic fight against inner experience is what drowns people. Make contact."},
 {id:"ac11",deck:"act",q:"Passengers on the bus: run the metaphor.",a:"You're driving toward your values; your thoughts and fears are rowdy passengers threatening and criticizing. You can stop the bus to argue, obey them and change route, or keep driving while they yell. The passengers never actually touch the wheel."},
-{id:"ac12",deck:"act",q:"What is committed action?",a:"Values-guided behavior, taken repeatedly, especially when it's hard — concrete, workable steps in the chosen direction. It's where ACT stops being philosophy and starts being calendar entries. Insight without action is decoration."},
-{id:"ac13",deck:"act",q:"How do ACT and ON reinforce each other?",a:"Both drop the demand that reality comply — ACT with feelings, ON with the cosmos. ACT supplies the behavioral machinery (defusion, willingness, committed action) and ON supplies the metaphysics: values as created meaning in a universe that assigns none."},
-{id:"ac14",deck:"act",q:"How does ACT differ from traditional CBT?",a:"CBT targets the content of thoughts — test them, restructure them. ACT targets the relationship to thoughts — hold them lightly and act on values regardless. One edits the script; the other stops taking direction from it."},
-{id:"ac15",deck:"act",q:"What is Relational Frame Theory's one-line contribution?",a:"Language lets humans relate anything to anything — which is why minds can transform a neutral Tuesday into evidence of doom. The same symbolic engine that builds rockets builds rumination. ACT is the workaround, not the off-switch."},
-{id:"ac16",deck:"act",q:"How does ACT map onto burnout mechanistically?",a:"Burnout runs on avoidance — numbing, cynicism, disengagement are all experiential avoidance in scrubs. ACT reduces emotional exhaustion by lowering avoidance and reconnecting behavior to values; AAQ-II scores mediate the change. Flexibility is the antidote to depletion."},
-{id:"ac17",deck:"act",q:"What is a willingness scale, in session?",a:"A 0-10 rating of how open the person is to having an experience without fighting it — not how intense the experience is. It reframes the target: we're not lowering the pain score, we're raising the willingness score. Different dial entirely."},
-{id:"ac18",deck:"act",q:"Present-moment contact: why is it load-bearing rather than decorative?",a:"Because suffering mostly lives in time travel — rehearsing the past, pre-living the future. Flexible attention to now is the platform every other process needs: you can't defuse, accept, or act on values from inside a mental rerun."},
+{id:"ac12",deck:"act",q:"What is committed action?",a:"Values-guided behavior, taken repeatedly, especially when it's hard: concrete, workable steps in the chosen direction. It's where ACT stops being philosophy and starts being calendar entries. Insight without action is decoration."},
+{id:"ac13",deck:"act",q:"How do ACT and ON reinforce each other?",a:"Both drop the demand that reality comply: ACT with feelings, ON with the cosmos. ACT supplies the behavioral machinery (defusion, willingness, committed action) and ON supplies the metaphysics: values as created meaning in a universe that assigns none."},
+{id:"ac14",deck:"act",q:"How does ACT differ from traditional CBT?",a:"CBT targets the content of thoughts: test them, restructure them. ACT targets the relationship to thoughts: hold them lightly and act on values regardless. One edits the script; the other stops taking direction from it."},
+{id:"ac15",deck:"act",q:"What is Relational Frame Theory's one-line contribution?",a:"Language lets humans relate anything to anything, which is why minds can transform a neutral Tuesday into evidence of doom. The same symbolic engine that builds rockets builds rumination. ACT is a workaround. The engine stays on."},
+{id:"ac16",deck:"act",q:"How does ACT map onto burnout mechanistically?",a:"Burnout runs on avoidance. Numbing, cynicism, disengagement are all experiential avoidance in scrubs. ACT reduces emotional exhaustion by lowering avoidance and reconnecting behavior to values; AAQ-II scores mediate the change. Flexibility is the antidote to depletion."},
+{id:"ac17",deck:"act",q:"What is a willingness scale, in session?",a:"A 0-10 rating of how open the person is to having an experience without fighting it. Intensity is a separate number. It reframes the target: we're raising the willingness score. Different dial entirely."},
+{id:"ac18",deck:"act",q:"Present-moment contact: why is it load-bearing?",a:"Because suffering mostly lives in time travel: rehearsing the past, pre-living the future. Flexible attention to now is the platform every other process needs: you can't defuse, accept, or act on values from inside a mental rerun."},
 
 /* ============ THE LINEAGE ============ */
-{id:"ph01",deck:"phil",q:"What is amor fati?",a:"Nietzsche's formula for greatness: love your fate. Not merely bearing what happens but wanting nothing to be different — no backward wish, no editing. Affirmation of the whole ledger, suffering included."},
-{id:"ph02",deck:"phil",q:"Explain the eternal recurrence as a test.",a:"Imagine a demon tells you that you must live this exact life, unchanged, infinitely many times. Despair or ecstasy? The thought experiment is a diagnostic: it measures whether you are living a life you could affirm — and a compass for building one."},
-{id:"ph03",deck:"phil",q:"'He who has a why to live can bear almost any how.' Who, and why does it matter clinically?",a:"Nietzsche — famously carried into the camps by Frankl. Clinically it's the values thesis in one line: meaning is the load-bearing structure of endurance. The intervention isn't removing the how; it's clarifying the why."},
-{id:"ph04",deck:"phil",q:"What is the editorial caveat on The Will to Power?",a:"It isn't a book Nietzsche wrote — it's notebook fragments compiled and reshaped posthumously by his sister, Elisabeth Förster-Nietzsche, who had her own (proto-fascist) agenda. Read it with a provenance flag: useful ore, compromised curation."},
-{id:"ph05",deck:"phil",q:"What did Nietzsche actually mean by 'God is dead'?",a:"Not triumph — diagnosis. The shared anchor of Western meaning had collapsed, and most people hadn't noticed the consequences: without the anchor, values must now be created rather than received. It's an assignment, not a celebration."},
-{id:"ph06",deck:"phil",q:"Define the absurd, per Camus.",a:"The collision between the human demand for meaning and the universe's unreasonable silence. The absurd isn't in the world or in us — it's in the confrontation. Neither party will yield, and Camus insists we keep both."},
-{id:"ph07",deck:"phil",q:"'One must imagine Sisyphus happy.' What is the argument?",a:"Sisyphus knows the boulder will roll back — and pushes anyway, with full lucidity and no appeal to hope. His scorn of the gods and ownership of his task make the fate his. The struggle itself toward the heights is enough to fill a heart."},
-{id:"ph08",deck:"phil",q:"What are Camus' three possible responses to the absurd?",a:"Physical suicide (eliminating the human term), philosophical suicide (the leap into faith or ideology — eliminating the honesty), and revolt: living fully in the tension without resolving it. Camus endorses only the third."},
-{id:"ph09",deck:"phil",q:"'Existence precedes essence' — unpack it.",a:"Sartre: there is no blueprint of you that existed before you did. You show up first, then define yourself through choices. No assigned nature means no excuse — the anxiety and the freedom are the same fact viewed from different chairs."},
-{id:"ph10",deck:"phil",q:"What is bad faith?",a:"Sartre's term for denying your own freedom — playing a fixed role ('I'm just a waiter,' 'I'm just like this') to escape the vertigo of choice. It's self-deception as anesthesia: more comfortable than freedom, and the price is your actual life."},
-{id:"ph11",deck:"phil",q:"What are Frankl's three roads to meaning?",a:"Work (creating or accomplishing something), love (encountering someone fully), and attitude — the stance taken toward unavoidable suffering. The third is the radical one: when everything else is stripped away, the freedom to choose one's attitude remains."},
-{id:"ph12",deck:"phil",q:"Epicurus on death: state the argument.",a:"'Death is nothing to us: when we exist, death is not; when death exists, we are not.' There is no moment at which you and your death coexist to harm you. Add the symmetry argument — you didn't dread the eons before your birth — and the fear loses its object."},
-{id:"ph13",deck:"phil",q:"What is memento mori as a Stoic practice?",a:"Deliberate daily remembrance of death — not morbidity, but prioritization technology. Contemplating finitude clarifies what deserves your remaining hours. The Stoics ran voluntary mortality salience as a feature, millennia before TMT measured it."},
-{id:"ph14",deck:"phil",q:"Where does Becker sit in the lineage?",a:"He's the bridge: fusing psychoanalysis (Rank, Freud) with existentialism (Kierkegaard) into a unified claim — character itself is a defense against death. TMT then turned Becker's synthesis into testable social psychology. He's the hinge between philosophy and lab."},
-{id:"ph15",deck:"phil",q:"What is Weber's disenchantment, and why does it matter for burnout?",a:"Modernity strips the world of magic and inherited meaning, replacing it with calculation and bureaucracy — the iron cage. Burnout's natural habitat: rationalized institutions that consume meaning-seeking humans as inputs. The EHR is the cage with a login."},
+{id:"ph01",deck:"phil",q:"What is amor fati?",a:"Nietzsche's formula for greatness: love your fate. Wanting nothing to be different. No backward wish, no editing. Affirmation of the whole ledger, suffering included."},
+{id:"ph02",deck:"phil",q:"Explain the eternal recurrence as a test.",a:"Imagine a demon tells you that you must live this exact life, unchanged, infinitely many times. Despair or ecstasy? The thought experiment is a diagnostic: it measures whether you are living a life you could affirm, and a compass for building one."},
+{id:"ph03",deck:"phil",q:"'He who has a why to live can bear almost any how.' Who, and why does it matter clinically?",a:"Nietzsche, famously carried into the camps by Frankl. Clinically it's the values thesis in one line: meaning is the load-bearing structure of endurance. The intervention is clarifying the why."},
+{id:"ph04",deck:"phil",q:"What is the editorial caveat on The Will to Power?",a:"It's notebook fragments compiled and reshaped posthumously by his sister, Elisabeth Förster-Nietzsche, who had her own (proto-fascist) agenda. Read it with a provenance flag: useful ore, compromised curation."},
+{id:"ph05",deck:"phil",q:"What did Nietzsche actually mean by 'God is dead'?",a:"A diagnosis. The shared anchor of Western meaning had collapsed, and most people hadn't noticed the consequences: without the anchor, values must now be created. It's an assignment."},
+{id:"ph06",deck:"phil",q:"Define the absurd, per Camus.",a:"The collision between the human demand for meaning and the universe's unreasonable silence. The absurd lives in the confrontation itself. Neither party will yield, and Camus insists we keep both."},
+{id:"ph07",deck:"phil",q:"'One must imagine Sisyphus happy.' What is the argument?",a:"Sisyphus knows the boulder will roll back and pushes anyway, with full lucidity and no appeal to hope. His scorn of the gods and ownership of his task make the fate his. The struggle itself toward the heights is enough to fill a heart."},
+{id:"ph08",deck:"phil",q:"What are Camus' three possible responses to the absurd?",a:"Physical suicide (eliminating the human term), philosophical suicide (the leap into faith or ideology, eliminating the honesty), and revolt: living fully in the tension without resolving it. Camus endorses only the third."},
+{id:"ph09",deck:"phil",q:"'Existence precedes essence': unpack it.",a:"Sartre: there is no blueprint of you that existed before you did. You show up first, then define yourself through choices. No assigned nature means no excuse. The anxiety and the freedom are the same fact viewed from different chairs."},
+{id:"ph10",deck:"phil",q:"What is bad faith?",a:"Sartre's term for denying your own freedom: playing a fixed role ('I'm just a waiter,' 'I'm just like this') to escape the vertigo of choice. It's self-deception as anesthesia: more comfortable than freedom, and the price is your actual life."},
+{id:"ph11",deck:"phil",q:"What are Frankl's three roads to meaning?",a:"Work (creating or accomplishing something), love (encountering someone fully), and attitude: the stance taken toward unavoidable suffering. The third is the radical one: when everything else is stripped away, the freedom to choose one's attitude remains."},
+{id:"ph12",deck:"phil",q:"Epicurus on death: state the argument.",a:"'Death is nothing to us: when we exist, death is not; when death exists, we are not.' There is no moment at which you and your death coexist to harm you. Add the symmetry argument (you didn't dread the eons before your birth) and the fear loses its object."},
+{id:"ph13",deck:"phil",q:"What is memento mori as a Stoic practice?",a:"Deliberate daily remembrance of death. Prioritization technology. Contemplating finitude clarifies what deserves your remaining hours. The Stoics ran voluntary mortality salience as a feature, millennia before TMT measured it."},
+{id:"ph14",deck:"phil",q:"Where does Becker sit in the lineage?",a:"He's the bridge: fusing psychoanalysis (Rank, Freud) with existentialism (Kierkegaard) into a unified claim: character itself is a defense against death. TMT then turned Becker's synthesis into testable social psychology. He's the hinge between philosophy and lab."},
+{id:"ph15",deck:"phil",q:"What is Weber's disenchantment, and why does it matter for burnout?",a:"Modernity strips the world of magic and inherited meaning, replacing it with calculation and bureaucracy: the iron cage. Burnout's natural habitat: rationalized institutions that consume meaning-seeking humans as inputs. The EHR is the cage with a login."},
 {id:"ph16",deck:"phil",q:"Sketch Marx's four alienations and the burnout connection.",a:"Estrangement from the product of labor, the process of labor, one's species-being (creative human nature), and other people. It's a nineteenth-century anatomy of burnout: work that separates you from meaning, agency, self, and colleagues will hollow you on schedule."},
-{id:"ph17",deck:"phil",q:"What is Adler's Gemeinschaftsgefühl and its relevance?",a:"Community feeling — the sense of belonging to and contributing to humankind. Adler held that significance-striving turns pathological when severed from social interest. Translation for ON: created meaning works best when it points outward."},
-{id:"ph18",deck:"phil",q:"What did Kierkegaard mean by anxiety as 'the dizziness of freedom'?",a:"Anxiety isn't fear of a thing — it's the vertigo of confronting one's own open possibility. Standing at the edge, the dread is that you COULD jump. Possibility itself is the abyss. Every existentialist after him is footnoting this."},
-{id:"ph19",deck:"phil",q:"Schopenhauer vs Nietzsche: the fork in the road.",a:"Both accept a meaningless, striving-driven world. Schopenhauer's answer: deny the will — retreat, renounce, minimize desire. Nietzsche's answer: affirm it — amor fati, yes to the whole catastrophe. ON is descended from the Nietzsche branch."},
-{id:"ph20",deck:"phil",q:"What is Heidegger's being-toward-death?",a:"Authentic existence requires owning your mortality as your ownmost possibility — not the abstract 'one dies' but MY death, certain and indefinite. Fleeing into the anonymous 'they' is inauthentic comfort; facing finitude individualizes and clarifies a life."},
+{id:"ph17",deck:"phil",q:"What is Adler's Gemeinschaftsgefühl and its relevance?",a:"Community feeling: the sense of belonging to and contributing to humankind. Adler held that significance-striving turns pathological when severed from social interest. Translation for ON: created meaning works best when it points outward."},
+{id:"ph18",deck:"phil",q:"What did Kierkegaard mean by anxiety as 'the dizziness of freedom'?",a:"Anxiety is the vertigo of confronting one's own open possibility. Standing at the edge, the dread is that you COULD jump. Possibility itself is the abyss. Every existentialist after him is footnoting this."},
+{id:"ph19",deck:"phil",q:"Schopenhauer vs Nietzsche: the fork in the road.",a:"Both accept a meaningless, striving-driven world. Schopenhauer's answer: deny the will: retreat, renounce, minimize desire. Nietzsche's answer: affirm it: amor fati, yes to the whole catastrophe. ON is descended from the Nietzsche branch."},
+{id:"ph20",deck:"phil",q:"What is Heidegger's being-toward-death?",a:"Authentic existence requires owning your mortality as your ownmost possibility. MY death, certain and indefinite. The abstract 'one dies' is how the crowd keeps it at arm's length. Fleeing into the anonymous 'they' is inauthentic comfort; facing finitude individualizes and clarifies a life."},
 
 /* ============ SYNTHESIS ============ */
-{id:"sy01",deck:"syn",q:"In the book, what is the hierarchy of the three threads?",a:"Optimistic Nihilism is what the book is ABOUT. Burnout is WHY the reader picks it up. Horror is HOW the ideas get explained. One thesis, one door in, one delivery system — that hierarchy prevents the three-big-ideas manuscript problem."},
+{id:"sy01",deck:"syn",q:"In the book, what is the hierarchy of the three threads?",a:"Optimistic Nihilism is what the book is ABOUT. Burnout is WHY the reader picks it up. Horror is HOW the ideas get explained. One thesis, one door in, one delivery system. That hierarchy prevents the three-big-ideas manuscript problem."},
 {id:"sy02",deck:"syn",q:"Name the book's four-part arc.",a:"Part I: The Diagnosis (burnout named). Part II: The Monsters (horror archetypes paired with existential givens). Part III: The Turn (Optimistic Nihilism delivered). Part IV: The Practice (the framework operationalized). Maya's arc threads all twelve chapters."},
-{id:"sy03",deck:"syn",q:"How do the three threads interact structurally across the book?",a:"They hand off rather than run parallel: horror peaks in Part II and recedes after Chapter 8; burnout transforms in meaning — disease, then avoidance, then signal; ON is withheld until the Chapter 6 pivot, then delivered across Part III."},
-{id:"sy04",deck:"syn",q:"Frame burnout as a failed immortality project.",a:"Through Becker: a healthcare career is heroism — mattering by saving lives. When the system makes the heroism impossible (moral injury, throughput medicine), the immortality project collapses, and what floods in is exactly what Becker predicted: depression, anxiety, dread."},
+{id:"sy03",deck:"syn",q:"How do the three threads interact structurally across the book?",a:"They hand off like a relay: horror peaks in Part II and recedes after Chapter 8; burnout transforms in meaning: disease, then avoidance, then signal; ON is withheld until the Chapter 6 pivot, then delivered across Part III."},
+{id:"sy04",deck:"syn",q:"Frame burnout as a failed immortality project.",a:"Through Becker: a healthcare career is heroism: mattering by saving lives. When the system makes the heroism impossible (moral injury, throughput medicine), the immortality project collapses, and what floods in is exactly what Becker predicted: depression, anxiety, dread."},
 {id:"sy05",deck:"syn",q:"Give the TMT mechanism of healthcare burnout in one chain.",a:"Daily death exposure = chronic mortality salience → constant terror management load → depletion of the buffers (meaning, self-esteem, connection) → emotional exhaustion → depersonalization as emergency buffering. Burnout as an existential supply-chain failure."},
-{id:"sy06",deck:"syn",q:"Connect Maslach's depersonalization to TMT's worldview defense.",a:"Both are distancing operations under existential threat. The clinician who turns patients into 'the gallbladder in bed 4' is doing crude terror management — dehumanizing the reminder of mortality to keep functioning. The defense works briefly and costs everything."},
-{id:"sy07",deck:"syn",q:"Why is horror uniquely suited to teach TMT and ON?",a:"Because it IS the material: horror is mortality salience as entertainment, insignificance as plot. It lets readers feel the concepts — dread, buffering, collapse, acceptance — before naming them. The monster is the syllabus."},
+{id:"sy06",deck:"syn",q:"Connect Maslach's depersonalization to TMT's worldview defense.",a:"Both are distancing operations under existential threat. The clinician who turns patients into 'the gallbladder in bed 4' is doing crude terror management, dehumanizing the reminder of mortality to keep functioning. The defense works briefly and costs everything."},
+{id:"sy07",deck:"syn",q:"Why is horror uniquely suited to teach TMT and ON?",a:"Because it IS the material: horror is mortality salience as entertainment, insignificance as plot. It lets readers feel the concepts (dread, buffering, collapse, acceptance) before naming them. The monster is the syllabus."},
 {id:"sy08",deck:"syn",q:"Argue that ON is ACT-consistent.",a:"ON is acceptance applied to the cosmos: stop fighting the fact of meaninglessness (willingness), stop fusing with inherited meaning-stories (defusion), and author values anyway (committed action). ON supplies the worldview; ACT supplies the verbs."},
-{id:"sy09",deck:"syn",q:"PDSA as Camus' revolt — make the case.",a:"Sisyphus with a run chart. The boulder will roll back — burnout recurs, systems resist — and you push anyway, lucidly, studying each descent. PDSA formalizes revolt: no appeal to final victory, only the next cycle. One must imagine Sisyphus iterating."},
-{id:"sy10",deck:"syn",q:"Why does measurement-based care belong inside a philosophy of meaninglessness?",a:"Because in a universe with no given truths, epistemics are all you have. Instruments — MBI, AAQ-II, ONAS, PFUS — are flashlights in the void: they don't create meaning, they keep your created meaning honest. Data over vibes is an ethical position."},
-{id:"sy11",deck:"syn",q:"Which monster is the burnout monster, and why does the pairing work?",a:"The zombie. Depersonalization made flesh: animate but not alive, consuming without self, moving in herds through fluorescent corridors. The pairing works because burned-out clinicians self-describe as zombies before any theory is introduced. The metaphor pre-exists the framework."},
-{id:"sy12",deck:"syn",q:"Cosmic horror and ON stand on the same fact. What is the choice point?",a:"Both accept cosmic insignificance as true. Cosmic horror concludes: therefore madness and despair. ON concludes: therefore freedom and play. The fact is fixed; the caption is chosen. That choice point is the book's entire pivot — Chapter 6 in one sentence."},
-{id:"sy13",deck:"syn",q:"Apply Stages of Change to adopting ON itself.",a:"You can't push someone into the void. Precontemplation ('meaning is fine, I'm fine') needs awareness, not arguments. Contemplation needs discrepancy — is the inherited meaning working? Only in preparation and action do ONAS-style practices land. Stage-match the philosophy like any behavior change."},
-{id:"sy14",deck:"syn",q:"Why is the brand 'The Cheerful Void' the whole thesis in three words?",a:"'Void' concedes the nihilism honestly — no inherent meaning, no cosmic ledger. 'Cheerful' declares the response — chosen, almost defiant lightness. The juxtaposition IS the framework: the noun is the diagnosis, the adjective is the intervention."},
-{id:"sy15",deck:"syn",q:"What role do ONAS and PFUS play in the framework's credibility?",a:"They're the measurement-based-care layer of the philosophy: ON makes claims (acceptance of meaninglessness improves wellbeing; flexibility under uncertainty is trainable), and the instruments make those claims falsifiable. A framework that can be scored can be studied — and defended."},
-{id:"sy16",deck:"syn",q:"Dark humor as a clinical tool: give the defusion argument.",a:"A joke about the void is defusion with better timing — it holds the terrifying thought at arm's length, shrinks its authority, and signals safety to the room. Gallows humor isn't denial; it's the mind demonstrating it can touch the material without being run by it."}
+{id:"sy09",deck:"syn",q:"PDSA as Camus' revolt: make the case.",a:"Sisyphus with a run chart. The boulder will roll back (burnout recurs, systems resist) and you push anyway, lucidly, studying each descent. PDSA formalizes revolt: no appeal to final victory, only the next cycle. One must imagine Sisyphus iterating."},
+{id:"sy10",deck:"syn",q:"Why does measurement-based care belong inside a philosophy of meaninglessness?",a:"Because in a universe with no given truths, epistemics are all you have. Instruments (MBI, AAQ-II, ONAS, PFUS) are flashlights in the void: they keep your created meaning honest. Data over vibes is an ethical position."},
+{id:"sy11",deck:"syn",q:"Which monster is the burnout monster, and why does the pairing work?",a:"The zombie. Depersonalization made flesh: animate and lifeless, consuming without self, moving in herds through fluorescent corridors. The pairing works because burned-out clinicians self-describe as zombies before any theory is introduced. The metaphor pre-exists the framework."},
+{id:"sy12",deck:"syn",q:"Cosmic horror and ON stand on the same fact. What is the choice point?",a:"Both accept cosmic insignificance as true. Cosmic horror concludes: therefore madness and despair. ON concludes: therefore freedom and play. The fact is fixed; the caption is chosen. That choice point is the book's entire pivot: Chapter 6 in one sentence."},
+{id:"sy13",deck:"syn",q:"Apply Stages of Change to adopting ON itself.",a:"You can't push someone into the void. Precontemplation ('meaning is fine, I'm fine') needs awareness. Arguments bounce off. Contemplation needs discrepancy: is the inherited meaning working? Only in preparation and action do ONAS-style practices land. Stage-match the philosophy like any behavior change."},
+{id:"sy14",deck:"syn",q:"Why is the brand 'The Cheerful Void' the whole thesis in three words?",a:"'Void' concedes the nihilism honestly: no inherent meaning, no cosmic ledger. 'Cheerful' declares the response: chosen, almost defiant lightness. The juxtaposition IS the framework: the noun is the diagnosis, the adjective is the intervention."},
+{id:"sy15",deck:"syn",q:"What role do ONAS and PFUS play in the framework's credibility?",a:"They're the measurement-based-care layer of the philosophy: ON makes claims (acceptance of meaninglessness improves wellbeing; flexibility under uncertainty is trainable), and the instruments make those claims falsifiable. A framework that can be scored can be studied and defended."},
+{id:"sy16",deck:"syn",q:"Dark humor as a clinical tool: give the defusion argument.",a:"A joke about the void is defusion with better timing. It holds the terrifying thought at arm's length, shrinks its authority, and signals safety to the room. Gallows humor is the mind demonstrating it can touch the material without being run by it."}
 ];
 
-/* ---------- spaced repetition (Leitner) ---------- */
-const BOX_DAYS = [0,1,3,7,21];
-const DAY = 86400000;
-const todayStamp = () => new Date().toDateString();
+/* ---------- lookups ---------- */
+const UNIT = Object.fromEntries(UNITS.map((u,i)=>[u.id,{...u,n:i+1}]));
+const LESSON = Object.fromEntries(LESSONS.map(l=>[l.id,l]));
+const CARD = Object.fromEntries(CARDS.map(c=>[c.id,c]));
+const CARD_LESSON = {};
+LESSONS.forEach(l=>l.cards.forEach(id=>CARD_LESSON[id]=l.id));
+const unitOf = l => UNIT[l.unit];
+const lessonsIn = uid => LESSONS.filter(l=>l.unit===uid);
+const lessonNum = l => unitOf(l).n + "." + (lessonsIn(l.unit).indexOf(l)+1);
 
-let sched = JSON.parse(store.get("vd_sched") || "{}");
-let meta = JSON.parse(store.get("vd_meta") || "{}");
-let custom = JSON.parse(store.get("vd_custom") || "[]");
-if(!meta.streak) meta = {streak:0,lastStudy:null,reviews:0,reviewsToday:0,reviewDay:null};
+/* ---------- persisted state ---------- */
+const load = (k,d) => { try{ return JSON.parse(store.get(k)) ?? d; }catch(e){ return d; } };
+let sched = load("vd_sched", {});
+let meta = load("vd_meta", {});
+let custom = load("vd_custom", []);
+let progress = load("vd_progress", {});
+let checkins = load("vd_checkins", {});
+let notes = load("vd_notes", []);
+let drafts = load("vd_drafts", {});
+meta = Object.assign({streak:0,lastStudy:null,reviews:0,reviewsToday:0,reviewDay:null}, meta);
 
-const allCards = () => CARDS.concat(custom);
-function cardState(id){ return sched[id] || {box:0,due:0}; }
-function isDue(id){ return cardState(id).due <= Date.now(); }
-function isMastered(id){ return cardState(id).box >= 4; }
 function saveAll(){
   store.set("vd_sched", JSON.stringify(sched));
   store.set("vd_meta", JSON.stringify(meta));
   store.set("vd_custom", JSON.stringify(custom));
+  store.set("vd_progress", JSON.stringify(progress));
+  store.set("vd_checkins", JSON.stringify(checkins));
+  store.set("vd_notes", JSON.stringify(notes));
+  store.set("vd_drafts", JSON.stringify(drafts));
 }
+
+const DAY = 86400000;
+function dateKey(d=new Date()){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function niceDate(ts){ return new Date(ts).toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
+function touchActivity(){
+  const today = new Date().toDateString(), yest = new Date(Date.now()-DAY).toDateString();
+  if(meta.lastStudy !== today){
+    meta.streak = (meta.lastStudy === yest) ? meta.streak+1 : 1;
+    meta.lastStudy = today;
+  }
+}
+function liveStreak(){
+  const today = new Date().toDateString(), yest = new Date(Date.now()-DAY).toDateString();
+  return (meta.lastStudy===today || meta.lastStudy===yest) ? meta.streak : 0;
+}
+const prog = id => progress[id] || (progress[id] = {opened:0, tried:[], done:false});
+const nextLesson = () => LESSONS.find(l=>!(progress[l.id]&&progress[l.id].done));
+
+/* ---------- spaced repetition (Leitner) ---------- */
+const BOX_DAYS = [0,1,3,7,21];
+const cardState = id => sched[id] || {box:0,due:0};
+const isDue = id => cardState(id).due <= Date.now();
 function grade(id, g){ /* g: 0 again, 1 hard, 2 good */
   const s = cardState(id);
   let box = s.box;
   if(g===0) box = 0;
-  else if(g===1) box = Math.max(0, box); /* stay */
-  else box = Math.min(4, box+1);
+  else if(g===2) box = Math.min(4, box+1);
   const days = g===0 ? 0 : BOX_DAYS[box];
   sched[id] = {box, due: g===0 ? Date.now() : Date.now() + days*DAY + 6*3600000};
   meta.reviews++;
-  if(meta.reviewDay !== todayStamp()){ meta.reviewDay = todayStamp(); meta.reviewsToday = 0; }
+  if(meta.reviewDay !== todayStr()){ meta.reviewDay = todayStr(); meta.reviewsToday = 0; }
   meta.reviewsToday++;
-  const yest = new Date(Date.now()-DAY).toDateString();
-  if(meta.lastStudy !== todayStamp()){
-    meta.streak = (meta.lastStudy === yest) ? meta.streak+1 : 1;
-    meta.lastStudy = todayStamp();
-  }
-  saveAll();
+  touchActivity(); saveAll();
+}
+const todayStr = () => new Date().toDateString();
+function recallPool(){
+  const ids = LESSONS.filter(l=>progress[l.id]&&progress[l.id].opened).flatMap(l=>l.cards);
+  return ids.map(id=>CARD[id]).filter(Boolean).concat(custom);
+}
+function cardColor(c){
+  const lid = CARD_LESSON[c.id];
+  return lid ? unitOf(LESSON[lid]).hex : (DECKS[c.deck]||DECKS.syn).hex;
+}
+function cardLabel(c){
+  const lid = CARD_LESSON[c.id];
+  return lid ? lessonNum(LESSON[lid])+" · "+LESSON[lid].title : (DECKS[c.deck]||{name:"Your card"}).name;
 }
 
-/* ---------- state ---------- */
-const app = document.getElementById("app");
-let screen = "home";       /* home | study */
-let mode = "due";          /* due | browse */
-let queue = [], qi = 0, flipped = false, sessionDeck = null, graded = 0;
+/* ---------- check-in dials ---------- */
+const DIALS = [
+  {k:"e", name:"Energy", q:"How full is the tank?", lo:"empty", hi:"full", hex:"#ff7a45", lesson:"n4"},
+  {k:"c", name:"Connection", q:"How close do people feel?", lo:"far away", hi:"close", hex:"#8b7cf7", lesson:"n2"},
+  {k:"f", name:"Effectiveness", q:"Am I any good at this today?", lo:"useless", hi:"sharp", hex:"#56b8ff", lesson:"a5"},
+  {k:"w", name:"Willingness", q:"Can I make room for what's hard?", lo:"bracing", hi:"open", hex:"#2dd4bf", lesson:"a2"}
+];
 
-function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+/* ---------- ui state ---------- */
+const app = document.getElementById("app");
+let view = "today";        /* today | path | lesson | toolkit | notes | recall */
+let tab = "today";
+let lessonId = null;
+let editingCheck = false, tmpCheck = null;
+let queue = [], qi = 0, flipped = false, rmode = "due", graded = 0, recallFrom = "today";
+
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function toast(msg){
+  document.querySelectorAll(".toast").forEach(t=>t.remove());
   const t = document.createElement("div"); t.className="toast"; t.textContent=msg;
   document.body.appendChild(t); setTimeout(()=>t.remove(), 2200);
 }
+function setGlow(hex){ document.body.style.setProperty("--glow", hex); }
 
-/* ---------- render: home ---------- */
-function renderHome(){
-  const cards = allCards();
-  const dueCount = cards.filter(c=>isDue(c.id)).length;
-  const mastered = cards.filter(c=>isMastered(c.id)).length;
-  const mastPct = Math.round(100*mastered/cards.length);
+/* ---------- tab bar ---------- */
+const ICONS = {
+  today:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>',
+  path:'<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7.5a3.5 3.5 0 0 0 0-7h-7a3.5 3.5 0 0 1 0-7H16"/>',
+  toolkit:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18M11 13v2h2v-2"/>',
+  notes:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>'
+};
+function renderTabs(){
+  const bar = document.getElementById("tabbar");
+  bar.style.display = view==="recall" ? "none" : "";
+  bar.innerHTML = `<nav>${[["today","Today"],["path","Path"],["toolkit","Toolkit"],["notes","Notes"]].map(([k,n])=>
+    `<button class="tab ${tab===k?'on':''}" onclick="go('${k}')" aria-label="${n}"><svg viewBox="0 0 24 24">${ICONS[k]}</svg>${n}</button>`).join("")}</nav>`;
+}
+function render(){
+  if(view==="today") renderToday();
+  else if(view==="path") renderPath();
+  else if(view==="lesson") renderLesson();
+  else if(view==="toolkit") renderToolkit();
+  else if(view==="notes") renderNotes();
+  else if(view==="recall") renderRecall();
+  renderTabs();
+}
+window.go = function(v){ view = v; tab = v; editingCheck = false; render(); window.scrollTo(0,0); };
 
-  let deckHTML = "";
-  for(const [key,d] of Object.entries(DECKS)){
-    const dc = cards.filter(c=>c.deck===key);
-    const due = dc.filter(c=>isDue(c.id)).length;
-    const mast = dc.filter(c=>isMastered(c.id)).length;
-    const pct = dc.length ? Math.round(100*mast/dc.length) : 0;
-    deckHTML += `<button class="deck ${key==='syn'?'syn':''}" style="--dc:${d.hex}" onclick="startDeck('${key}')">
-      ${due>0?`<span class="duechip">${due}</span>`:""}
-      <h3>${d.name}</h3>
-      <div class="meta">${dc.length} cards · ${d.sub}</div>
-      <div class="bar"><i style="width:${pct}%"></i></div>
-    </button>`;
+/* ---------- TODAY ---------- */
+function bars(k, hex){
+  let out = "";
+  for(let i=13;i>=0;i--){
+    const ck = checkins[dateKey(new Date(Date.now()-i*DAY))];
+    const v = ck ? ck[k] : null;
+    out += v==null ? `<i class="none"></i>` : `<i class="${i===0?'today':''}" style="height:${Math.max(8,v*10)}%"></i>`;
+  }
+  return `<div class="bars" style="--dc:${hex}">${out}</div>`;
+}
+function insight(){
+  const recent = [];
+  for(let i=0;i<7;i++){ const ck = checkins[dateKey(new Date(Date.now()-i*DAY))]; if(ck) recent.push(ck); }
+  if(recent.length < 3) return "";
+  let low = null;
+  for(const d of DIALS){
+    const avg = recent.reduce((s,c)=>s+c[d.k],0)/recent.length;
+    if(avg < 4 && (!low || avg < low.avg)) low = {d, avg};
+  }
+  if(!low) return "";
+  const l = LESSON[low.d.lesson];
+  return `<div class="insight">${low.d.name} has averaged ${low.avg.toFixed(1)} across your last ${recent.length} check-ins. Try <button onclick="openLesson('${l.id}')">${lessonNum(l)} ${esc(l.title)}</button>. If it stays this low for 2 weeks, tell your PCP or a therapist.</div>`;
+}
+function renderToday(){
+  setGlow("#8b7cf7");
+  const h = new Date().getHours();
+  const greet = h<5 ? "Still up" : h<12 ? "Morning" : h<17 ? "Afternoon" : "Evening";
+  const ck = checkins[dateKey()];
+  const streak = liveStreak();
+
+  let checkHTML;
+  if(!ck || editingCheck){
+    if(!tmpCheck) tmpCheck = ck ? {...ck} : {e:5,c:5,f:5,w:5};
+    checkHTML = `<div class="panel">
+      <div class="panel-h"><h2>Check in</h2><span class="muted">30 seconds</span></div>
+      ${DIALS.map(d=>`<div class="dial" style="--dc:${d.hex}">
+        <div class="dial-top"><div><b>${d.name}</b> <span>${d.q}</span></div><div class="dial-val" id="dv-${d.k}">${tmpCheck[d.k]}</div></div>
+        <input type="range" min="0" max="10" step="1" value="${tmpCheck[d.k]}" oninput="setDial('${d.k}',this.value)" aria-label="${d.name}">
+        <div class="dial-ends"><span>${d.lo}</span><span>${d.hi}</span></div>
+      </div>`).join("")}
+      <button class="btn primary" style="--uc:var(--violet)" onclick="saveCheck()">Log today</button>
+    </div>`;
+  } else {
+    checkHTML = `<div class="panel">
+      <div class="panel-h"><h2>Your last 14 days</h2><button class="link" onclick="editCheck()">Edit today</button></div>
+      ${DIALS.map(d=>`<div class="trend" style="--dc:${d.hex}">
+        <div class="nm">${d.name}<small>${d.q}</small></div>${bars(d.k,d.hex)}<div class="v">${ck[d.k]}</div></div>`).join("")}
+      ${insight()}
+    </div>`;
   }
 
-  app.innerHTML = `
-    <header>
-      <h1>Void <em>Deck</em></h1>
-      <button class="iconbtn" onclick="openTools()">⋯</button>
-    </header>
-    <div class="tagline">The Cheerful Void · knowledge system</div>
-    <div class="stats">
-      <div class="stat due"><b>${dueCount}</b><span>due now</span></div>
-      <div class="stat streak"><b>${meta.streak||0}</b><span>day streak</span></div>
-      <div class="stat mast"><b>${mastPct}%</b><span>mastered</span></div>
-    </div>
-    <button class="cta" onclick="startDue()" ${dueCount===0?"disabled":""}>
-      ${dueCount>0 ? "Study due cards" : "All caught up"}
-      <small>${dueCount>0 ? "Spaced repetition across every deck" : "The void will generate more dread tomorrow"}</small>
-    </button>
-    <div class="sectionlabel">Decks — tap to browse & study</div>
-    <div class="decks">${deckHTML}</div>
-    <div class="sectionlabel">Deck tools</div>
-    <div class="tools">
-      <button class="tool" onclick="openAdd()">+ Add card</button>
-      <button class="tool" onclick="exportJSON()">Export</button>
-      <button class="tool" onclick="document.getElementById('importFile').click()">Import</button>
+  const nl = nextLesson();
+  let moveHTML;
+  if(nl){
+    const u = unitOf(nl), p = progress[nl.id];
+    const triedToday = p && p.tried.includes(dateKey());
+    moveHTML = `<div class="panel move" style="--uc:${u.hex}">
+      <span class="chip">Unit ${u.n} · ${esc(u.name)}</span>
+      <h3>${esc(nl.title)}</h3>
+      <div class="idea">${esc(nl.idea)}</div>
+      <div class="pill">${triedToday?"✓ Tried today":"Try"} · <b>${esc(nl.practice.name)}</b> · ${nl.practice.min} min</div>
+      <button class="btn primary" onclick="openLesson('${nl.id}')">Open lesson ${lessonNum(nl)}</button>
     </div>`;
+  } else {
+    moveHTML = `<div class="panel move" style="--uc:var(--cyan)">
+      <span class="chip">Path complete</span>
+      <h3>Run your own cycle</h3>
+      <div class="idea">You've walked the whole map. Pick 1 behavior and start a 2-week experiment.</div>
+      <button class="btn primary" onclick="openLesson('p1')">Open 6.1 Run small experiments</button>
+    </div>`;
+  }
+
+  const pool = recallPool();
+  const due = pool.filter(c=>isDue(c.id)).length;
+  const tool = TOOLS[Math.floor(Date.now()/DAY) % TOOLS.length];
+  const tu = unitOf(LESSON[tool.lesson]);
+
+  app.innerHTML = `
+    <div class="top">
+      <div>
+        <div class="eyebrow">${new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}</div>
+        <h1>${greet}.</h1>
+        ${streak ? `<span class="streak">✦ ${streak} day${streak===1?"":"s"} in a row</span>` : ""}
+      </div>
+      <button class="iconbtn" onclick="openMenu()" aria-label="Menu">⋯</button>
+    </div>
+    ${checkHTML}
+    <div class="label">Today's move</div>
+    ${moveHTML}
+    <div class="label">Keep it fresh</div>
+    <div class="panel"><button class="mini" onclick="startRecall()">
+      <span class="big">${pool.length ? due : "·"}</span>
+      <span><h3>${pool.length ? (due ? "cards ready to recall" : "Nothing due right now") : "Recall builds as you go"}</h3>
+      <span class="muted">${pool.length ? `${pool.length} cards from lessons you've opened` : "Open a lesson and its cards join the pile"}</span></span>
+      <span class="arrow">›</span></button></div>
+    <div class="label">If you need it today</div>
+    <div class="panel" style="--uc:${tu.hex}"><button class="mini" onclick="go('toolkit')">
+      <span><span class="chip" style="margin-bottom:8px">${esc(tool.when)}</span><h3>${esc(tool.title)}</h3>
+      <span class="muted">${esc(tool.steps[0])}</span></span>
+      <span class="arrow">›</span></button></div>`;
+}
+window.setDial = function(k,v){ tmpCheck[k] = +v; document.getElementById("dv-"+k).textContent = v; };
+window.saveCheck = function(){
+  checkins[dateKey()] = {...tmpCheck}; tmpCheck = null; editingCheck = false;
+  touchActivity(); saveAll(); render(); toast("Logged. Data over vibes.");
+};
+window.editCheck = function(){ editingCheck = true; tmpCheck = {...checkins[dateKey()]}; render(); };
+
+/* ---------- PATH ---------- */
+function renderPath(){
+  setGlow("#8b7cf7");
+  const done = LESSONS.filter(l=>progress[l.id]&&progress[l.id].done).length;
+  const nl = nextLesson();
+  const seg = LESSONS.map(l=>`<i class="${progress[l.id]&&progress[l.id].done?'on':''}" style="--uc:${unitOf(l).hex}"></i>`).join("");
+  let html = `
+    <div class="top">
+      <div><div class="eyebrow">The Cheerful Void</div><h1>The <em>Path</em></h1></div>
+      <button class="iconbtn" onclick="openMenu()" aria-label="Menu">⋯</button>
+    </div>
+    <div class="overall">${seg}</div>
+    <div class="muted">${done} of ${LESSONS.length} lessons done. Go in order or jump around. Every lesson has a practice you can use today.</div>`;
+  for(const u of UNITS){
+    const U = UNIT[u.id];
+    html += `<section class="unit" style="--uc:${u.hex}">
+      <div class="unit-h"><div class="unit-n">${U.n}</div><div><h2>${esc(u.name)}</h2><div class="sub">${esc(u.sub)}</div></div></div>
+      <p class="unit-intro">${esc(u.intro)}</p>
+      <div class="steps">${lessonsIn(u.id).map((l,i)=>{
+        const p = progress[l.id] || {};
+        const cls = p.done ? "done" : (nl && nl.id===l.id ? "current" : "");
+        const tried = p.tried && p.tried.length ? ` · tried ${p.tried.length}×` : "";
+        return `<button class="step ${cls}" onclick="openLesson('${l.id}')">
+          <span class="node">${p.done?"✓":i+1}</span>
+          <span class="t"><b>${esc(l.title)}</b><span>${esc(l.practice.name)} · ${l.practice.min} min${tried}</span></span>
+          <span class="go">›</span></button>`;
+      }).join("")}</div>
+    </section>`;
+  }
+  app.innerHTML = html;
 }
 
-/* ---------- render: study ---------- */
-function renderStudy(){
-  if(qi >= queue.length){ return renderDone(); }
-  const c = queue[qi];
-  const d = DECKS[c.deck];
-  const pct = Math.round(100*qi/queue.length);
+/* ---------- LESSON ---------- */
+window.openLesson = function(id){
+  lessonId = id; view = "lesson"; tab = "path";
+  const p = prog(id); if(!p.opened) p.opened = Date.now();
+  saveAll(); render(); window.scrollTo(0,0);
+};
+function renderLesson(){
+  const l = LESSON[lessonId], u = unitOf(l), p = prog(l.id);
+  setGlow(u.hex);
+  const idx = LESSONS.indexOf(l), next = LESSONS[idx+1];
+  const triedToday = p.tried.includes(dateKey());
+  const cards = l.cards.map(id=>CARD[id]).filter(Boolean);
+  const dueHere = cards.filter(c=>isDue(c.id)).length;
+  app.innerHTML = `<div style="--uc:${u.hex}">
+    <button class="back" onclick="go('path')">‹ Path</button>
+    <div class="lesson-hero">
+      <span class="chip">Unit ${u.n} · ${esc(u.name)}</span>
+      <div class="num">Lesson ${lessonNum(l)}</div>
+      <h1>${esc(l.title)}</h1>
+      <div class="idea">${esc(l.idea)}</div>
+    </div>
+
+    <div class="panel sec">
+      <div class="sec-n"><i>01</i> Where it shows up</div>
+      <p class="life">${esc(l.life)}</p>
+    </div>
+
+    <div class="panel sec practice">
+      <div class="sec-n"><i>02</i> Try it today</div>
+      <h3>${esc(l.practice.name)}</h3>
+      <div class="min">About ${l.practice.min} minutes</div>
+      <ol>${l.practice.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+      <button class="btn ${triedToday?'ghost':'primary'}" onclick="markTried()" ${triedToday?"disabled":""}>${triedToday?"✓ Logged for today":"I tried it"}</button>
+      ${p.tried.length ? `<div class="tried">Tried ${p.tried.length} time${p.tried.length===1?"":"s"} · last on ${niceDate(new Date(p.tried[p.tried.length-1]+"T12:00"))}</div>` : ""}
+    </div>
+
+    <div class="panel sec">
+      <div class="sec-n"><i>03</i> Write it down</div>
+      <div class="prompt">${esc(l.prompt)}</div>
+      <textarea id="ltext" placeholder="A few honest lines. Nobody grades this." oninput="saveDraft(this.value)">${esc(drafts[l.id]||"")}</textarea>
+      <button class="btn ghost" onclick="saveLessonNote()">Save to Notes</button>
+    </div>
+
+    <div class="panel sec">
+      <div class="sec-n"><i>04</i> Go deeper · ${cards.length} ideas</div>
+      ${cards.map(c=>`<details class="dc"><summary>${esc(c.q)}</summary><p>${esc(c.a)}</p></details>`).join("")}
+      <div style="margin-top:14px"><button class="btn ghost" onclick="startLessonRecall()">Quiz yourself on these${dueHere?` · ${dueHere} due`:""}</button></div>
+    </div>
+
+    <div class="lesson-foot">
+      <button class="btn ${p.done?'ghost':'primary'}" onclick="toggleDone()">${p.done?"✓ Completed · tap to undo":"Mark lesson complete"}</button>
+      ${next ? `<button class="btn ghost" onclick="openLesson('${next.id}')">Next: ${lessonNum(next)} ${esc(next.title)} ›</button>` : ""}
+    </div>
+  </div>`;
+}
+window.markTried = function(){
+  const p = prog(lessonId), k = dateKey();
+  if(!p.tried.includes(k)) p.tried.push(k);
+  touchActivity(); saveAll(); render(); toast("Logged. That's a rep.");
+};
+window.toggleDone = function(){
+  const p = prog(lessonId); p.done = !p.done;
+  if(p.done) touchActivity();
+  saveAll(); render();
+  if(p.done) toast("Lesson "+lessonNum(LESSON[lessonId])+" complete");
+};
+window.saveDraft = function(v){ drafts[lessonId] = v; saveAll(); };
+window.saveLessonNote = function(){
+  const t = document.getElementById("ltext").value.trim();
+  if(!t){ toast("Write something first"); return; }
+  const l = LESSON[lessonId];
+  notes.unshift({id:"nt"+Date.now(), lesson:l.id, prompt:l.prompt, text:t, date:Date.now()});
+  delete drafts[l.id]; touchActivity(); saveAll(); render(); toast("Saved to Notes");
+};
+
+/* ---------- TOOLKIT ---------- */
+function renderToolkit(){
+  setGlow("#e3455a");
   app.innerHTML = `
+    <div class="top">
+      <div><div class="eyebrow">For the moment it hits</div><h1>The <em>Toolkit</em></h1></div>
+      <button class="iconbtn" onclick="openMenu()" aria-label="Menu">⋯</button>
+    </div>
+    <p class="muted" style="margin-bottom:20px">Short moves pulled from the lessons. Open the one that matches what's happening right now.</p>
+    ${TOOLS.map(t=>{
+      const l = LESSON[t.lesson], u = unitOf(l);
+      return `<details class="tool" style="--uc:${u.hex}">
+        <summary><div class="when">${esc(t.when)}</div><h3>${esc(t.title)}</h3></summary>
+        <div class="body">
+          <ol>${t.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+          <button class="link" onclick="openLesson('${l.id}')">From lesson ${lessonNum(l)} · ${esc(l.title)} ›</button>
+        </div>
+      </details>`;
+    }).join("")}`;
+}
+
+/* ---------- NOTES ---------- */
+function renderNotes(){
+  setGlow("#d9a441");
+  const list = notes.length ? notes.map(n=>{
+    const l = n.lesson && LESSON[n.lesson];
+    const u = l ? unitOf(l) : null;
+    return `<div class="note">
+      <div class="note-h">
+        ${l ? `<button class="chip" style="--uc:${u.hex};background:none;cursor:pointer" onclick="openLesson('${l.id}')">${lessonNum(l)} ${esc(l.title)}</button>` : `<span class="chip" style="--uc:var(--gold)">Field note</span>`}
+        <span><span class="d">${niceDate(n.date)}</span> <button class="x" onclick="delNote('${n.id}')" aria-label="Delete note">×</button></span>
+      </div>
+      ${n.prompt ? `<div class="q">${esc(n.prompt)}</div>` : ""}
+      <div class="tx">${esc(n.text)}</div>
+    </div>`;
+  }).join("") : `<div class="empty">Nothing yet. Every lesson ends with a question. Your answers land here.</div>`;
+  app.innerHTML = `
+    <div class="top">
+      <div><div class="eyebrow">Your record</div><h1>Field <em>Notes</em></h1></div>
+      <button class="iconbtn" onclick="openMenu()" aria-label="Menu">⋯</button>
+    </div>
+    <div class="panel" style="--uc:var(--gold)">
+      <div class="prompt" style="font-size:19px">What happened today that you want to remember?</div>
+      <textarea id="freetext" placeholder="Something you noticed, tried, or survived." oninput="drafts.__free=this.value;saveAll()">${esc(drafts.__free||"")}</textarea>
+      <button class="btn ghost" onclick="saveFree()">Save note</button>
+    </div>
+    <div class="label">${notes.length} entr${notes.length===1?"y":"ies"}</div>
+    <div class="panel">${list}</div>`;
+}
+window.saveFree = function(){
+  const t = document.getElementById("freetext").value.trim();
+  if(!t){ toast("Write something first"); return; }
+  notes.unshift({id:"nt"+Date.now(), lesson:null, prompt:null, text:t, date:Date.now()});
+  delete drafts.__free; touchActivity(); saveAll(); render(); toast("Saved");
+};
+window.delNote = function(id){
+  if(!confirm("Delete this note?")) return;
+  notes = notes.filter(n=>n.id!==id); saveAll(); render();
+};
+
+/* ---------- RECALL ---------- */
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+window.startRecall = function(){
+  const pool = recallPool();
+  if(!pool.length){ toast("Open a lesson first. Its cards join the pile."); return; }
+  const due = pool.filter(c=>isDue(c.id));
+  if(!due.length){ toast("Nothing due. Come back tomorrow."); return; }
+  queue = shuffle(due).slice(0,15); rmode = "due"; recallFrom = view;
+  qi=0; flipped=false; graded=0; view="recall"; render(); window.scrollTo(0,0);
+};
+window.startLessonRecall = function(){
+  const cards = LESSON[lessonId].cards.map(id=>CARD[id]).filter(Boolean);
+  const due = cards.filter(c=>isDue(c.id));
+  if(due.length){ queue = shuffle(due.slice()); rmode = "due"; }
+  else { queue = shuffle(cards.slice()); rmode = "browse"; }
+  recallFrom = "lesson"; qi=0; flipped=false; graded=0; view="recall"; render(); window.scrollTo(0,0);
+};
+function renderRecall(){
+  if(qi >= queue.length) return renderDone();
+  const c = queue[qi], hex = cardColor(c);
+  setGlow(hex);
+  const pct = Math.round(100*qi/queue.length);
+  app.innerHTML = `<div style="--uc:${hex}">
     <div class="study-top">
-      <button class="backbtn" onclick="goHome()">‹ Decks</button>
+      <button class="back" style="margin:0" onclick="exitRecall()">‹ Done</button>
       <span class="counter">${qi+1} / ${queue.length}</span>
     </div>
-    <div class="progress" style="--pc:${d.hex}"><i style="width:${pct}%"></i></div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
     <div class="cardwrap">
-      <div class="flashcard ${flipped?'flipped':''}" style="--pc:${d.hex}" onclick="flip()">
+      <div class="flashcard ${flipped?'flipped':''}" onclick="flip()">
         <div class="face front">
-          <span class="deckchip">${d.name}</span>
-          <div class="qtext serif">${esc(c.q)}</div>
+          <span class="chip">${esc(cardLabel(c))}</span>
+          <div class="qtext">${esc(c.q)}</div>
           <div class="hint">tap to reveal</div>
         </div>
         <div class="face back">
-          <span class="deckchip">${d.name}</span>
+          <span class="chip">${esc(cardLabel(c))}</span>
           <div class="atext"><p>${esc(c.a)}</p></div>
         </div>
       </div>
     </div>
-    ${mode==="due" ? `
+    ${rmode==="due" ? `
     <div class="grades ${flipped?'show':''}">
       <button class="grade g-again" onclick="doGrade(0)">Again<small>right now</small></button>
       <button class="grade g-hard" onclick="doGrade(1)">Hard<small>soon</small></button>
       <button class="grade g-good" onclick="doGrade(2)">Got it<small>later</small></button>
     </div>` : `
-    <div class="browse-nav">
-      <button onclick="prevCard()">‹ Prev</button>
-      <button onclick="nextCard()">Next ›</button>
-    </div>`}`;
+    <div class="row2">
+      <button class="btn ghost" onclick="prevCard()">‹ Prev</button>
+      <button class="btn ghost" onclick="nextCard()">Next ›</button>
+    </div>`}
+  </div>`;
 }
-
 function renderDone(){
   const lines = [
-    "Nothing you reviewed matters cosmically. It will still be on the exam of your life.",
-    "The boulder rolled back down. You get to push it again tomorrow. Lucky you.",
-    "No failure in a study session — only information.",
-    "The void appreciates your consistency. The void appreciates nothing. Both are true."
+    "The boulder rolled back down. You get to push it again tomorrow.",
+    "Every miss is information. You just collected some.",
+    "The void appreciates your consistency. The void appreciates nothing. Both are true.",
+    "Nothing you reviewed matters cosmically. You still know it better than you did 5 minutes ago."
   ];
+  setGlow("#8b7cf7");
   app.innerHTML = `
     <div class="done">
-      <div class="glyph serif">✦</div>
-      <h2>Session complete</h2>
-      <p>${graded} cards reviewed. ${lines[Math.floor(Math.random()*lines.length)]}</p>
-      <button class="cta" onclick="goHome()">Back to decks<small>Streak: ${meta.streak||0} days</small></button>
+      <div class="glyph">✦</div>
+      <h2>Recall done</h2>
+      <p>${graded} card${graded===1?"":"s"} reviewed. ${lines[Math.floor(Math.random()*lines.length)]}</p>
+      <button class="btn primary" style="--uc:var(--violet)" onclick="exitRecall()">Back</button>
     </div>`;
 }
-
-/* ---------- actions ---------- */
-function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
-window.startDue = function(){
-  queue = shuffle(allCards().filter(c=>isDue(c.id))).slice(0,30);
-  if(!queue.length) return;
-  mode="due"; qi=0; flipped=false; graded=0; screen="study"; renderStudy();
-};
-window.startDeck = function(key){
-  const dc = allCards().filter(c=>c.deck===key);
-  const due = dc.filter(c=>isDue(c.id));
-  if(due.length){ queue = shuffle(due.slice()); mode="due"; }
-  else { queue = shuffle(dc.slice()); mode="browse"; }
-  sessionDeck=key; qi=0; flipped=false; graded=0; screen="study"; renderStudy();
-};
-window.flip = function(){ flipped=!flipped; renderStudy(); };
+window.exitRecall = function(){ view = recallFrom; render(); window.scrollTo(0,0); };
+window.flip = function(){ flipped=!flipped; render(); };
 window.doGrade = function(g){
   grade(queue[qi].id, g); graded++;
-  if(g===0){ queue.push(queue[qi]); } /* again: requeue at end */
-  qi++; flipped=false; renderStudy();
+  if(g===0) queue.push(queue[qi]);
+  qi++; flipped=false; render();
 };
-window.nextCard = function(){ qi=Math.min(queue.length-1,qi+1); flipped=false; renderStudy(); };
-window.prevCard = function(){ qi=Math.max(0,qi-1); flipped=false; renderStudy(); };
-window.goHome = function(){ screen="home"; renderHome(); };
+window.nextCard = function(){ if(qi>=queue.length-1){ qi=queue.length; } else qi++; flipped=false; render(); };
+window.prevCard = function(){ qi=Math.max(0,qi-1); flipped=false; render(); };
 
-/* ---------- add card / tools ---------- */
-window.openAdd = function(){
-  const opts = Object.entries(DECKS).map(([k,d])=>`<option value="${k}">${d.name}</option>`).join("");
+/* ---------- menu: add card, backup ---------- */
+function modal(html){
+  closeModal();
   const bg = document.createElement("div"); bg.className="modal-bg"; bg.id="modalbg";
-  bg.innerHTML = `<div class="modal" onclick="event.stopPropagation()">
-    <h2 class="serif">Add a card</h2>
-    <label>Deck</label><select id="nd">${opts}</select>
-    <label>Front (question / prompt)</label><textarea id="nq"></textarea>
-    <label>Back (answer)</label><textarea id="na"></textarea>
-    <div class="mrow">
-      <button class="mbtn ghost" onclick="closeModal()">Cancel</button>
-      <button class="mbtn primary" onclick="saveCard()">Save card</button>
-    </div>
-  </div>`;
+  bg.innerHTML = `<div class="modal" onclick="event.stopPropagation()">${html}</div>`;
   bg.onclick = closeModal;
   document.body.appendChild(bg);
-};
+}
 window.closeModal = function(){ const m=document.getElementById("modalbg"); if(m) m.remove(); };
+window.openMenu = function(){
+  modal(`<h2>Settings</h2>
+    <p class="muted">Everything lives in this browser. Export a backup now and then.</p>
+    <div class="menu">
+      <button class="btn ghost" onclick="openAdd()">+ Add your own recall card</button>
+      <button class="btn ghost" onclick="exportJSON()">Export backup</button>
+      <button class="btn ghost" onclick="document.getElementById('importFile').click()">Import backup</button>
+      <button class="btn ghost" onclick="closeModal()">Close</button>
+    </div>`);
+};
+window.openAdd = function(){
+  const opts = Object.entries(DECKS).map(([k,d])=>`<option value="${k}">${d.name}</option>`).join("");
+  modal(`<h2>Add a card</h2>
+    <label for="nd">Topic</label><select id="nd">${opts}</select>
+    <label for="nq">Front</label><textarea id="nq"></textarea>
+    <label for="na">Back</label><textarea id="na"></textarea>
+    <div class="row2" style="margin-top:16px">
+      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn primary" style="--uc:var(--violet)" onclick="saveCard()">Save card</button>
+    </div>`);
+};
 window.saveCard = function(){
   const deck=document.getElementById("nd").value, q=document.getElementById("nq").value.trim(), a=document.getElementById("na").value.trim();
   if(!q||!a){ toast("Front and back both required"); return; }
   custom.push({id:"cu"+Date.now(), deck, q, a});
-  saveAll(); closeModal(); renderHome(); toast("Card added to "+DECKS[deck].name);
-};
-window.openTools = function(){
-  toast("Tools are at the bottom of the deck list");
+  saveAll(); closeModal(); render(); toast("Added to your recall pile");
 };
 window.exportJSON = function(){
-  const data = JSON.stringify({sched, meta, custom, exported:new Date().toISOString()}, null, 2);
+  const data = JSON.stringify({sched, meta, custom, progress, checkins, notes, drafts, exported:new Date().toISOString()}, null, 2);
   const blob = new Blob([data], {type:"application/json"});
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = "void-deck-backup.json"; a.click();
+  a.href = URL.createObjectURL(blob); a.download = "cheerful-void-backup-"+dateKey()+".json"; a.click();
   toast("Backup exported");
 };
 document.getElementById("importFile").addEventListener("change", function(e){
@@ -527,15 +1177,20 @@ document.getElementById("importFile").addEventListener("change", function(e){
     try{
       const d = JSON.parse(r.result);
       if(d.sched) sched = d.sched;
-      if(d.meta) meta = d.meta;
+      if(d.meta) meta = Object.assign(meta, d.meta);
       if(d.custom) custom = d.custom;
-      saveAll(); renderHome(); toast("Backup restored");
-    }catch(err){ toast("Import failed — not a valid backup"); }
+      if(d.progress) progress = d.progress;
+      if(d.checkins) checkins = d.checkins;
+      if(d.notes) notes = d.notes;
+      if(d.drafts) drafts = d.drafts;
+      saveAll(); closeModal(); render(); toast("Backup restored");
+    }catch(err){ toast("Import failed: not a valid backup"); }
+    e.target.value = "";
   };
   r.readAsText(f);
 });
 
-renderHome();
+render();
 </script>
 </body>
 </html>
